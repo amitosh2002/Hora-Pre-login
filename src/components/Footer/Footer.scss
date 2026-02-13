@@ -1,0 +1,28 @@
+@use '../../customfiles/customcolors/customColorsV1' as colors;
+
+.app-footer {
+  padding: 60px 24px;
+  text-align: center;
+  background: colors.$slate-50;
+  border-top: 1px solid colors.$slate-200;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.app-footer__container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.app-footer__brand {
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: -0.05em;
+  margin-bottom: 16px;
+  color: colors.$primary;
+}
+
+.app-footer__copy {
+  margin: 0;
+  color: colors.$slate-400;
+  font-size: 14px;
+}
