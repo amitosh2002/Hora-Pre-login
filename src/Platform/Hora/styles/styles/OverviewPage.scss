@@ -1,594 +1,205 @@
-@use '../../../../customfiles/customcolors/customColorsV1' as *;
-
-$content-max: 1280px;
-$content-padding: 60px;
-$content-padding-mobile: 24px;
+@use '../../../../customfiles/customcolors/customColorsV1' as colors;
 
 .overview-page {
   min-height: 100vh;
-  background: $white;
-  color: $slate-900;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: colors.$bg-offwhite;
+  color: colors.$primary;
   width: 100%;
 }
 
-.section-inner {
-  max-width: $content-max;
-  margin: 0 auto;
-  padding: 0 $content-padding;
-  width: 100%;
-  box-sizing: border-box;
-}
+.hero-curved {
+  position: relative;
+  background: linear-gradient(135deg, #2b395f 0%, #1e293b 100%);
+  padding: 50px 40px 0;
+  overflow: hidden;
 
-// ============================================================================
-// HERO SECTION
-// ============================================================================
-.overview-hero {
-  background: $slate-50;
-  border-bottom: 1px solid $slate-200;
-  padding: 100px $content-padding;
-  width: 100%;
-  box-sizing: border-box;
-
-  &__container {
-    max-width: $content-max;
+  &__content {
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 $content-padding;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
   }
 
-  &__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    background: $white;
-    border: 1px solid $slate-300;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 700;
-    color: $slate-500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 32px;
+  &__text-area {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: flex-start;
   }
 
   &__title {
-    font-size: 56px;
+    flex: 1;
+    font-size: 64px;
     font-weight: 800;
-    color: $slate-900;
-    margin: 0 0 24px;
     line-height: 1.1;
-    letter-spacing: -0.03em;
+    color: #ffffff;
+    letter-spacing: -0.02em;
   }
 
   &__subtitle {
-    font-size: 20px;
-    color: $slate-600;
-    line-height: 1.6;
-    max-width: 700px;
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+    }
+  }
+
+  &__illustration {
+    max-width: 1280px;
+    margin: 30px auto 0;
+    height: 300px; 
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.solutions-section {
+  padding: 100px 60px;
+  background-color: transparent;
+
+  &__container {
+    max-width: 1280px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 60px;
+  }
+
+  &__header {
+    flex: none;
+    position: relative;
+    top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 600px;
+
+    .section-title {
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: colors.$primary;
+    }
+
+    .section-description {
+      font-size: 16px;
+      line-height: 1.6;
+      color: colors.$slate-600;
+      margin-bottom: 12px;
+    }
+  }
+
+  &__grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
   }
 }
 
-// ============================================================================
-// SECTION HEADER
-// ============================================================================
-.section-header {
+.metric-clean-card {
+  border: none;
+  background: colors.$bg-offwhite;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
   display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 40px;
-
-  svg {
-    color: $slate-900;
-  }
-
-  h2 {
-    font-size: 40px;
-    font-weight: 800;
-    color: $slate-900;
-    margin: 0;
-    letter-spacing: -0.02em;
-  }
-}
-
-.section-description {
-  font-size: 18px;
-  color: $slate-500;
-  margin: -8px 0 0 auto;
-  line-height: 1.6;
-  max-width: 600px;
-  margin-left: 56px;
-}
-
-// ============================================================================
-// METRICS SECTION
-// ============================================================================
-.metrics-section {
-  padding: 100px $content-padding;
-  border-bottom: 1px solid $slate-100;
-}
-
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
-}
-
-.metric-card {
-  background: $white;
-  border: 1px solid $slate-200;
-  padding: 32px;
-  border-radius: 0;
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: $slate-900;
-    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
-  }
+  flex-direction: column;
+  gap: 12px;
 
   &__header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-  }
-
-  &__icon {
-    width: 44px;
-    height: 44px;
-    background: $slate-100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: $slate-900;
-  }
-
-  &__trend {
-    font-size: 14px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 4px;
+    color: colors.$slate-500;
   }
 
   &__value {
     font-size: 32px;
     font-weight: 800;
-    color: $slate-900;
-    margin-bottom: 8px;
+    color: colors.$primary;
   }
 
   &__label {
     font-size: 14px;
-    color: $slate-500;
-    font-weight: 600;
-  }
-
-  &--green {
-    .metric-card__trend {
-      background: rgba($green, 0.1);
-      color: $green;
-    }
-  }
-
-  &--yellow {
-    .metric-card__trend {
-      background: rgba($yellow, 0.1);
-      color: $yellow;
-    }
+    color: colors.$slate-600;
+    font-weight: 500;
   }
 }
 
-// ============================================================================
-// VELOCITY MATRIX
-// ============================================================================
-.velocity-section {
-  padding: 100px $content-padding;
-  background: $slate-50;
-  border-bottom: 1px solid $slate-200;
-}
-
-.velocity-matrix {
-  background: $white;
-  border: 1px solid $slate-200;
-  overflow: hidden;
-}
-
-.velocity-matrix__header {
-  display: grid;
-  grid-template-columns: 2fr 2fr 1fr 1fr 1fr;
-  gap: 24px;
-  padding: 20px 32px;
-  background: $slate-50;
-  border-bottom: 1px solid $slate-200;
-  font-size: 12px;
-  font-weight: 800;
-  color: $slate-500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.velocity-matrix__row {
-  display: grid;
-  grid-template-columns: 2fr 2fr 1fr 1fr 1fr;
-  gap: 24px;
-  padding: 24px 32px;
-  border-bottom: 1px solid $slate-100;
-  align-items: center;
-  transition: background 0.2s ease;
-
-  &:hover {
-    background: $slate-50;
-  }
-
-  &:last-child {
-    border-bottom: none;
-  }
-}
-
-.velocity-matrix__cell {
-  font-size: 15px;
-  color: $slate-900;
-  font-weight: 600;
-
-  &--name {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-}
-
-.dev-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: $slate-900;
-  color: $white;
+// Feature Cards (Zenpark style — colored oval icon bg)
+.playful-feature {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 12px;
-  flex-shrink: 0;
-}
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
 
-.velocity-bar {
-  position: relative;
-  height: 24px;
-  background: $slate-100;
-  border: 1px solid $slate-200;
-  overflow: hidden;
-}
-
-.velocity-bar__fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background: $slate-900;
-  transition: width 0.3s ease;
-}
-
-.velocity-bar__value {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 12px;
-  font-weight: 700;
-  color: $slate-900;
-  z-index: 1;
-}
-
-.status-badge {
-  display: inline-block;
-  padding: 4px 12px;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-radius: 4px;
-
-  &--high {
-    background: rgba($green, 0.1);
-    color: $green;
-  }
-
-  &--medium {
-    background: rgba($yellow, 0.1);
-    color: $yellow;
-  }
-
-  &--low {
-    background: rgba($red, 0.1);
-    color: $red;
-  }
-}
-
-// ============================================================================
-// GEMINI INSIGHTS
-// ============================================================================
-.gemini-section {
-  padding: 100px $content-padding;
-  border-bottom: 1px solid $slate-100;
-}
-
-.insights-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 32px;
-}
-
-.insight-card {
-  background: $white;
-  border: 1px solid $slate-200;
-  padding: 32px;
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: $slate-900;
-    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
-  }
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  &__icon {
-    width: 40px;
-    height: 40px;
-    background: $slate-100;
+  &__icon-container {
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $slate-900;
+    margin-bottom: 8px;
+
+    &.icon-pink { background: #ffe4f0; }
+    &.icon-blue { background: #e0edff; }
+    &.icon-purple { background: #ede4ff; }
+    &.icon-amber { background: #fff3e0; }
+    &.icon-teal { background: #dcf5f0; }
+  }
+
+  &__icon-bg { display: none; }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: colors.$primary;
   }
 
   &__title {
     font-size: 20px;
-    font-weight: 800;
-    color: $slate-900;
-    margin: 0 0 12px;
+    font-weight: 700;
+    color: colors.$primary;
   }
 
   &__description {
     font-size: 15px;
-    color: $slate-600;
-    line-height: 1.6;
-    margin-bottom: 24px;
-  }
-
-  &__footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 20px;
-    border-top: 1px solid $slate-100;
-  }
-
-  &__action {
-    font-size: 13px;
-    font-weight: 700;
-    color: $slate-500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  svg {
-    color: $slate-400;
-    transition: transform 0.2s ease;
-  }
-
-  &:hover svg {
-    transform: translateX(4px);
-  }
-
-  &--optimization {
-    border-top: 4px solid $slate-900;
-  }
-
-  &--trend {
-    border-top: 4px solid $green;
-  }
-
-  &--alert {
-    border-top: 4px solid $yellow;
+    line-height: 1.7;
+    color: colors.$slate-600;
   }
 }
 
-.impact-badge {
-  padding: 4px 10px;
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border-radius: 4px;
-
-  &--high {
-    background: rgba($red, 0.1);
-    color: $red;
-  }
-
-  &--medium {
-    background: rgba($yellow, 0.1);
-    color: $yellow;
-  }
-
-  &--positive {
-    background: rgba($green, 0.1);
-    color: $green;
-  }
-}
-
-// ============================================================================
-// FEATURES SECTION
-// ============================================================================
-.features-section {
-  padding: 100px $content-padding;
-  background: $slate-50;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 32px;
-}
-
-.feature-box {
-  background: $white;
-  border: 1px solid $slate-200;
-  padding: 40px;
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: $slate-900;
-    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
-  }
-
-  &__icon {
-    width: 56px;
-    height: 56px;
-    background: $slate-900;
-    color: $white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-  }
-
-  h3 {
-    font-size: 22px;
-    font-weight: 800;
-    color: $slate-900;
-    margin: 0 0 16px;
-  }
-
-  p {
-    font-size: 15px;
-    color: $slate-600;
-    line-height: 1.6;
-    margin-bottom: 24px;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    li {
-      font-size: 14px;
-      color: $slate-500;
-      padding-left: 24px;
-      position: relative;
-
-      &:before {
-        content: '•';
-        position: absolute;
-        left: 0;
-        font-weight: 900;
-        color: $slate-900;
-      }
-    }
-  }
-}
-
-// ============================================================================
-// RESPONSIVE
-// ============================================================================
 @media (max-width: 1024px) {
-  .overview-hero {
-    padding: 80px $content-padding-mobile;
+  .hero-curved {
+    padding: 60px 30px 100px;
+    border-bottom-right-radius: 30% 60px;
 
-    &__container {
-      padding: 0 $content-padding-mobile;
-    }
-
-    &__title {
-      font-size: 42px;
-    }
-  }
-
-  .section-inner {
-    padding: 0 $content-padding-mobile;
-  }
-
-  .metrics-section,
-  .velocity-section,
-  .gemini-section,
-  .features-section {
-    padding: 80px $content-padding-mobile;
-  }
-
-  .velocity-matrix__header {
-    display: none;
-  }
-
-  .velocity-matrix__row {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 24px;
-    border-bottom: 2px solid $slate-200;
-  }
-
-  .velocity-matrix__cell {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-
-    &::before {
-      content: attr(data-label);
-      font-weight: 800;
-      color: $slate-500;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    &--name {
+    &__text-area {
       flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
-
-      &::before {
-        content: 'Developer';
-      }
+      gap: 32px;
     }
   }
-}
-
-@media (max-width: 768px) {
-  .overview-hero {
-    padding: 60px $content-padding-mobile;
-
-    &__title {
-      font-size: 32px;
-    }
-
-    &__subtitle {
-      font-size: 18px;
-    }
+  .solutions-section__container {
+    flex-direction: column;
+    gap: 60px;
   }
-
-  .section-header h2 {
-    font-size: 28px;
-  }
-
-  .metrics-grid,
-  .insights-grid,
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .section-description {
-    margin-left: 0;
-    margin-top: 16px;
+  .solutions-section__header {
+    flex: none;
+    position: static;
   }
 }

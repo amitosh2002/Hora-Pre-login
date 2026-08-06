@@ -1,397 +1,206 @@
-// ============================================================================
-// Hora Services Introduction - Professional Grey Theme
-// Uses customColorsV1 palette
-// ============================================================================
-@use '../../../../customfiles/customcolors/customColorsV1' as *;
+@use '../../../../customfiles/customcolors/customColorsV1' as colors;
 
-// ============================================================================
-// PAGE CONTAINER
-// ============================================================================
 .hora-services-intro {
-  min-height: 100vh;
-  background: $white;
-  color: $slate-900;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   width: 100%;
-}
-
-// ============================================================================
-// HERO SECTION
-// ============================================================================
-.hero-intro {
-  background: $slate-50;
-  border-bottom: 1px solid $slate-200;
-  padding: 120px 60px;
-  width: 100%;
-  text-align: center;
-
-  &__container {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  &__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    background: $white;
-    border: 1px solid $slate-300;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 700;
-    color: $slate-500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 32px;
-  }
-
-  &__title {
-    font-size: 64px;
-    font-weight: 800;
-    color: $slate-900;
-    margin-bottom: 24px;
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-  }
-
-  &__subtitle {
-    font-size: 22px;
-    color: $slate-600;
-    line-height: 1.6;
-    max-width: 700px;
-    margin: 0 auto 48px;
-  }
-
-  &__actions {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-}
-
-// ============================================================================
-// SERVICES GRID
-// ============================================================================
-.services-showcase {
-  padding: 120px 60px;
-  max-width: 100%;
-  margin: 0 auto;
-
-  &__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    width: 100%;
-  }
-}
-
-.service-card-v2,
-.service-card-v2--link {
-  background: $white;
-  border: 1px solid $slate-200;
-  padding: 48px;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
   overflow: hidden;
 }
 
-.service-card-v2--link {
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-}
-
-.service-card-v2:hover,
-.service-card-v2--link:hover {
-  border-color: $slate-900;
-  transform: translateY(-8px);
-  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08);
-
-  .service-card-v2__arrow {
-    transform: translateX(4px);
-    opacity: 1;
-  }
-}
-
-.service-card-v2__icon,
-.service-card-v2--link .service-card-v2__icon {
-  width: 56px;
-  height: 56px;
-  background: $slate-900;
-  color: $white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 32px;
-}
-
-.service-card-v2__title,
-.service-card-v2--link .service-card-v2__title {
-  font-size: 24px;
-  font-weight: 800;
-  color: $slate-900;
-  margin-bottom: 16px;
-}
-
-.service-card-v2__description,
-.service-card-v2--link .service-card-v2__description {
-  font-size: 16px;
-  color: $slate-500;
-  line-height: 1.7;
-  margin-bottom: 32px;
-  flex-grow: 1;
-}
-
-.service-card-v2__footer,
-.service-card-v2--link .service-card-v2__footer {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 14px;
-  font-weight: 700;
-  color: $slate-900;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.service-card-v2__arrow,
-.service-card-v2--link .service-card-v2__arrow {
-  transition: all 0.3s ease;
-  opacity: 0.6;
-}
-
-// ============================================================================
-// FEATURE SECTION (Full Width Layout)
-// ============================================================================
-.feature-highlight {
-  background: $slate-50;
-  padding: 120px 60px;
-  border-top: 1px solid $slate-200;
-  border-bottom: 1px solid $slate-200;
-  width: 100%;
-
-  &__container {
-    max-width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 80px;
-
-    &.reverse {
-      flex-direction: row-reverse;
-    }
-  }
+// ----------------------------------------------------------------------------
+// Curved Hero Section
+// ----------------------------------------------------------------------------
+.hero-curved {
+  position: relative;
+  background: linear-gradient(135deg, #eef4ff 0%, #e0ecff 100%);
+  padding: 50px 40px 0;
+  overflow: hidden;
 
   &__content {
-    flex: 1;
-  }
-
-  &__visual {
-    flex: 1;
-    background: $white;
-    border: 1px solid $slate-200;
-    height: 480px;
+    max-width: 1280px;
+    margin: 0 auto;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     position: relative;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+    z-index: 2;
   }
 
-  &__badge {
-    font-size: 12px;
-    font-weight: 800;
-    color: $slate-400;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 24px;
-    display: block;
+  &__text-area {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: flex-start;
   }
 
   &__title {
-    font-size: 48px;
+    flex: 1;
+    font-size: 64px;
     font-weight: 800;
-    color: $slate-900;
-    margin-bottom: 24px;
     line-height: 1.1;
+    color: colors.$primary;
     letter-spacing: -0.02em;
   }
 
-  &__description {
-    font-size: 18px;
-    color: $slate-600;
-    line-height: 1.7;
-    margin-bottom: 40px;
-    max-width: 600px;
+  &__subtitle {
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: colors.$slate-600;
+      font-weight: 500;
+    }
   }
 
-  &__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-
-    li {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      color: $slate-800;
-
-      svg {
-        color: $slate-900;
-      }
-    }
+  &__illustration {
+    max-width: 1280px;
+    margin: 30px auto 0;
+    height: 300px; // For DataVizGraphic
+    position: relative;
+    z-index: 1;
   }
 }
 
-// ============================================================================
-// CLOSING CTA
-// ============================================================================
-.intro-cta {
-  padding: 160px 60px;
-  background: $slate-900;
-  color: $white;
-  text-align: center;
-  width: 100%;
+// ----------------------------------------------------------------------------
+// Playful Solutions Section
+// ----------------------------------------------------------------------------
+.solutions-section {
+  padding: 120px 40px;
+  background-color: colors.$white;
 
   &__container {
-    max-width: 800px;
+    max-width: 1280px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 60px;
+  }
+
+  &__header {
+    flex: none;
+    position: relative;
+    top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 600px;
+
+    .section-title {
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: colors.$primary;
+    }
+
+    .section-description {
+      font-size: 16px;
+      line-height: 1.6;
+      color: colors.$slate-600;
+      margin-bottom: 12px;
+    }
+  }
+
+  &__grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    padding-top: 20px;
+  }
+}
+
+// Feature Cards (Zenpark style — colored oval icon bg)
+.playful-feature {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+
+  &__icon-container {
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+
+    // Color variants
+    &.icon-pink { background: #ffe4f0; }
+    &.icon-blue { background: #e0edff; }
+    &.icon-purple { background: #ede4ff; }
+    &.icon-amber { background: #fff3e0; }
+    &.icon-teal { background: #dcf5f0; }
+  }
+
+  &__icon-bg { display: none; }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: colors.$primary;
   }
 
   &__title {
-    font-size: 56px;
-    font-weight: 800;
-    margin-bottom: 24px;
-    letter-spacing: -0.03em;
+    font-size: 20px;
+    font-weight: 700;
+    color: colors.$primary;
   }
 
   &__description {
-    font-size: 20px;
-    color: $slate-400;
-    margin-bottom: 48px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.7;
+    color: colors.$slate-600;
   }
-}
 
-// ============================================================================
-// RESPONSIVE
-// ============================================================================
-@media (max-width: 1200px) {
-  .services-showcase__grid {
-    grid-template-columns: repeat(2, 1fr);
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: colors.$primary;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    margin-top: 4px;
+
+    &:hover {
+      color: colors.$pink;
+    }
   }
 }
 
 @media (max-width: 1024px) {
-  .hero-intro {
-    padding: 80px 40px;
-    
-    &__title {
-      font-size: 48px;
+  .hero-curved {
+    padding: 60px 30px 100px;
+    border-bottom-left-radius: 30% 60px;
+
+    &__text-area {
+      flex-direction: column;
+      gap: 32px;
     }
   }
 
-  .feature-highlight {
-    padding: 80px 40px;
-    
-    &__container {
-      flex-direction: column;
-      gap: 40px;
-      
-      &.reverse {
-        flex-direction: column;
-      }
-    }
+  .solutions-section__container {
+    flex-direction: column;
+    gap: 60px;
+  }
 
-    &__visual {
-      width: 100%;
-      height: 320px;
-    }
+  .solutions-section__header {
+    flex: none;
+    position: static;
   }
 }
 
 @media (max-width: 768px) {
-  .services-showcase__grid {
+  .solutions-section__grid {
     grid-template-columns: 1fr;
-  }
-
-  .hero-intro__title {
-    font-size: 36px;
-  }
-
-  .feature-highlight__title {
-    font-size: 32px;
-  }
-}
-
-// ============================================================================
-// COMPONENT OVERRIDES
-// ============================================================================
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  background: $white;
-  border: 1px solid $slate-300;
-  border-radius: 100px;
-  font-size: 11px;
-  font-weight: 700;
-  color: $slate-500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 16px 32px;
-  font-size: 15px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  border: none;
-  font-family: inherit;
-
-  &--primary {
-    background: $slate-900;
-    color: $white;
-
-    &:hover {
-      background: $slate-800;
-      transform: translateY(-2px);
-    }
-  }
-
-  &--outline {
-    background: transparent;
-    color: $slate-900;
-    border: 1px solid $slate-900;
-
-    &:hover {
-      background: $slate-50;
-      transform: translateY(-2px);
-    }
-  }
-
-  &--white {
-    background: $white;
-    color: $slate-900;
-
-    &:hover {
-      background: $slate-50;
-      transform: translateY(-2px);
-    }
   }
 }

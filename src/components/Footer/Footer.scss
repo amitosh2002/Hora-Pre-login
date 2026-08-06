@@ -17,8 +17,27 @@
   font-weight: 900;
   font-size: 24px;
   letter-spacing: -0.05em;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   color: colors.$primary;
+}
+
+.app-footer__links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.app-footer__link {
+  font-size: 14px;
+  font-weight: 600;
+  color: colors.$slate-500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: colors.$primary;
+  }
 }
 
 .app-footer__copy {
