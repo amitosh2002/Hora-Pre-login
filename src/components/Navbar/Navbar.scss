@@ -63,7 +63,7 @@
   transition: color 0.2s ease;
 
   &:hover {
-    color: colors.$pink;
+    color: #8b5cf6;
   }
 
   &--active {
@@ -88,7 +88,7 @@
     font-weight: 600;
     
     &:hover {
-      color: colors.$pink;
+      color: #8b5cf6;
     }
   }
 }

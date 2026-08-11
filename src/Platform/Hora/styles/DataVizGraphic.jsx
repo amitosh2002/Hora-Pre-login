@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import './DataVizGraphic.scss';
 
 export default function DataVizGraphic() {
@@ -19,13 +20,40 @@ export default function DataVizGraphic() {
       const color = isHighlighted ? '#ff2d88' : '#cbd5e1';
 
       nodes.push(
-        <circle key={`${r}-${c}`} cx={x} cy={y} r={size} fill={color} opacity={isHighlighted ? 1 : 0.4} />
+        <motion.circle 
+          key={`${r}-${c}`} 
+          cx={x} 
+          cy={y} 
+          r={size} 
+          fill={color} 
+          initial={{ opacity: isHighlighted ? 1 : 0.4 }}
+          animate={isHighlighted ? { 
+            scale: [1, 1.3, 1],
+            opacity: [1, 0.7, 1] 
+          } : {}}
+          transition={isHighlighted ? {
+            duration: 2 + Math.random() * 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          } : {}}
+        />
       );
 
       // Draw some connecting lines
       if (c > 0 && Math.random() > 0.5) {
         nodes.push(
-          <line key={`l-${r}-${c}`} x1={x - 40} y1={y - Math.sin((c-1)*0.5)*30 + yOffset - yOffset} x2={x} y2={y} stroke="#e2e8f0" strokeWidth="1" />
+          <motion.line 
+            key={`l-${r}-${c}`} 
+            x1={x - 40} 
+            y1={y - Math.sin((c-1)*0.5)*30 + yOffset - yOffset} 
+            x2={x} 
+            y2={y} 
+            stroke="#e2e8f0" 
+            strokeWidth="1" 
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 1.5, delay: (r + c) * 0.1, ease: "easeOut" }}
+          />
         );
       }
     }

@@ -1,244 +1,298 @@
 @use '../../customfiles/customcolors/customColorsV1' as colors;
 
 .about-page {
-  min-height: 100vh;
-  background: colors.$bg-offwhite;
-  color: colors.$primary;
   width: 100%;
+  overflow: hidden;
+  background-color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-.hero-curved {
+// ----------------------------------------------------------------------------
+// Clean Hero Section
+// ----------------------------------------------------------------------------
+.hero-clean {
   position: relative;
-  background: linear-gradient(135deg, #2b395f 0%, #1e293b 100%);
-  padding: 50px 40px 0;
+  background: #ffffff;
+  padding: 100px 40px 60px;
   overflow: hidden;
 
   &__content {
     max-width: 1280px;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
     position: relative;
     z-index: 2;
   }
 
   &__text-area {
+    position: relative;
     display: flex;
-    justify-content: space-between;
-    width: 100%;
+    flex-direction: column;
     align-items: flex-start;
+    
+    // Decorative circle overlapping text
+    &::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: -80px;
+      width: 480px;
+      height: 480px;
+      border: 2px solid #e2e8f0;
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+    }
   }
 
   &__title {
-    flex: 1;
-    font-size: 64px;
+    font-size: 72px;
     font-weight: 800;
     line-height: 1.1;
-    color: #ffffff;
-    letter-spacing: -0.02em;
+    color: #1e293b;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    
+    span {
+      display: block;
+    }
   }
 
   &__subtitle {
-    flex: 1;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    align-items: flex-start;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #475569;
+    margin-bottom: 40px;
+    max-width: 85%;
+  }
 
-    p {
-      font-size: 16px;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.7);
-      font-weight: 500;
+  .btn-purple {
+    background-color: #8b5cf6;
+    color: white;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s, transform 0.2s;
+    
+    &:hover {
+      background-color: #7c3aed;
+      transform: translateY(-2px);
     }
   }
 
   &__illustration {
-    max-width: 1280px;
-    margin: 30px auto 0;
-    height: 300px; 
     position: relative;
-    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #f8fafc 0%, transparent 70%);
+      z-index: -1;
+      border-radius: 50%;
+    }
+    
+    .playful-svg-graphic {
+       width: 100%;
+       height: auto;
+       max-width: 500px;
+    }
   }
 }
 
+// ----------------------------------------------------------------------------
+// Solutions Section Grid
+// ----------------------------------------------------------------------------
 .solutions-section {
-  padding: 100px 60px;
-  background-color: transparent;
+  padding: 80px 40px 120px;
+  background-color: #ffffff;
 
   &__container {
     max-width: 1280px;
     margin: 0 auto;
     display: flex;
-    gap: 80px;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__header {
-    flex: 0 0 350px;
-    position: sticky;
-    top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-
+    text-align: center;
+    margin-bottom: 60px;
+    
     .section-title {
       font-size: 40px;
       font-weight: 800;
-      line-height: 1.2;
-      color: colors.$primary;
+      color: #1e293b;
+      margin-bottom: 16px;
     }
-
+    
     .section-description {
       font-size: 16px;
-      line-height: 1.6;
-      color: colors.$slate-600;
-      margin-bottom: 12px;
+      color: #475569;
+      max-width: 600px;
     }
   }
 
-  &__grid {
-    flex: 1;
+  .hero-solutions-grid {
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px 60px;
-    padding-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
   }
 }
 
-// Feature Cards (Zenpark style)
-.playful-feature {
+// ----------------------------------------------------------------------------
+// Clean Feature Cards
+// ----------------------------------------------------------------------------
+.clean-feature-card {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
+  background-color: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  padding: 40px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+    transform: translateY(-4px);
+    border-color: #cbd5e1;
+  }
 
   &__icon-container {
     width: 64px;
     height: 64px;
-    border-radius: 20px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 8px;
-
-    &.icon-pink { background: #ffe4f0; }
-    &.icon-blue { background: #e0edff; }
-    &.icon-purple { background: #ede4ff; }
-    &.icon-amber { background: #fff3e0; }
-    &.icon-teal { background: #dcf5f0; }
-  }
-
-  &__icon-bg { display: none; }
-
-  &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: colors.$primary;
+    margin-bottom: 24px;
+    
+    &.icon-pink { background-color: #fce7f3; color: #db2777; }
+    &.icon-blue { background-color: #dbeafe; color: #2563eb; }
+    &.icon-purple { background-color: #f3e8ff; color: #9333ea; }
+    &.icon-amber { background-color: #fef3c7; color: #d97706; }
+    &.icon-teal { background-color: #ccfbf1; color: #0d9488; }
   }
 
   &__title {
     font-size: 20px;
     font-weight: 700;
-    color: colors.$primary;
+    color: #1e293b;
+    margin: 0 0 16px 0;
   }
 
   &__description {
     font-size: 15px;
-    line-height: 1.7;
-    color: colors.$slate-600;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0 0 24px 0;
   }
 }
 
-// Team Section
+// ----------------------------------------------------------------------------
+// Clean Team Section
+// ----------------------------------------------------------------------------
 .team-section {
-  padding: 100px 60px;
-  background: transparent;
+  padding: 80px 40px 120px;
+  background-color: #f8fafc; // Soft gray background for contrast
 
   &__container {
     max-width: 1280px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
   .section-title {
     font-size: 40px;
     font-weight: 800;
-    line-height: 1.2;
-    color: colors.$primary;
+    color: #1e293b;
     margin-bottom: 16px;
   }
-
+  
   .section-description {
     font-size: 16px;
-    line-height: 1.6;
-    color: colors.$slate-600;
+    color: #475569;
+    max-width: 600px;
+    margin-bottom: 60px;
   }
 
   &__grid {
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-  }
-}
-
-.team-card {
-  background: colors.$white;
-  border-radius: 20px;
-  padding: 40px 32px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
   }
 
-  &__count {
-    font-size: 48px;
-    font-weight: 800;
-    color: colors.$pink;
-    display: block;
-    margin-bottom: 8px;
-  }
-
-  &__name {
-    font-size: 20px;
-    font-weight: 700;
-    color: colors.$primary;
-    margin-bottom: 12px;
-  }
-
-  &__description {
-    font-size: 15px;
-    line-height: 1.6;
-    color: colors.$slate-600;
+  .team-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    border: 1px solid #e2e8f0;
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-4px);
+    }
+    
+    &__count {
+      display: inline-block;
+      font-size: 48px;
+      font-weight: 900;
+      color: #8b5cf6;
+      margin-bottom: 16px;
+    }
+    
+    &__name {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 12px;
+    }
+    
+    &__description {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.6;
+    }
   }
 }
 
 @media (max-width: 1024px) {
-  .hero-curved {
-    padding: 60px 30px 100px;
-    border-bottom-left-radius: 30% 60px;
-
-    &__text-area {
-      flex-direction: column;
-      gap: 32px;
-    }
-  }
-  .solutions-section__container {
-    flex-direction: column;
+  .hero-clean__content {
+    grid-template-columns: 1fr;
     gap: 60px;
   }
-  .solutions-section__header {
-    flex: none;
-    position: static;
+  
+  .hero-clean__text-area::before {
+    display: none;
   }
-  .solutions-section__grid {
-    grid-template-columns: 1fr;
+}
+
+@media (max-width: 768px) {
+  .hero-clean {
+    padding: 60px 20px;
   }
-  .team-section__grid {
-    grid-template-columns: 1fr;
+  
+  .hero-clean__title {
+    font-size: 48px;
   }
 }
