@@ -6,32 +6,104 @@ import DataVizGraphic from './DataVizGraphic';
 import './styles/HoraServicesIntro.scss';
 
 export default function HoraServicesIntro() {
-  const mainServices = [
+  const platformFeatures = [
     {
-      title: "01 Plan — Sprint boards, DFD-native",
-      description: "Flow-based boards that map how work actually moves — branch, PR, review, deploy — not just three generic columns.",
+      title: '01 Plan — Sprint boards, DFD-native',
+      description: 'Flow-based boards that map how work actually moves — branch, PR, review, deploy — not just three generic columns.',
       icon: LayoutDashboard,
-      colorClass: "icon-pink"
+      gradientStart: '#f43f5e',
+      gradientEnd: '#f97316',
+      shadowColor: 'rgba(249, 115, 22, 0.25)',
+      bulletColor: '#f97316'
     },
     {
-      title: "02 Measure — Hora Matrix",
-      description: "Deployment frequency, lead time, change failure rate and MTTR — computed from your GitHub activity, not estimated.",
+      title: '02 Measure — Hora Matrix',
+      description: 'Deployment frequency, lead time, change failure rate and MTTR — computed from your GitHub activity, not estimated.',
       icon: BarChart3,
-      colorClass: "icon-purple"
+      gradientStart: '#3b82f6',
+      gradientEnd: '#0ea5e9',
+      shadowColor: 'rgba(59, 130, 246, 0.25)',
+      bulletColor: '#3b82f6'
     },
     {
-      title: "03 Communicate — Chat with slash commands",
-      description: "Mention teammates, resolve threads on tickets, or run /standup to pull yesterday's commits into today's sync.",
+      title: '03 Communicate — Chat with slash commands',
+      description: 'Mention teammates, resolve threads on tickets, or run /standup to pull yesterday\'s commits into today\'s sync.',
       icon: MessageSquare,
-      colorClass: "icon-amber"
+      gradientStart: '#8b5cf6',
+      gradientEnd: '#d946ef',
+      shadowColor: 'rgba(139, 92, 246, 0.25)',
+      bulletColor: '#8b5cf6'
     },
     {
-      title: "04 Govern — Multi-tenant by default",
-      description: "Org-scoped data, numeric RBAC levels, and label management that admins actually understand at a glance.",
+      title: '04 Govern — Multi-tenant by default',
+      description: 'Org-scoped data, numeric RBAC levels, and label management that admins actually understand at a glance.',
       icon: Shield,
-      colorClass: "icon-blue"
+      gradientStart: '#10b981',
+      gradientEnd: '#14b8a6',
+      shadowColor: 'rgba(16, 185, 129, 0.25)',
+      bulletColor: '#10b981'
     }
   ];
+
+  const renderCard = (feature, index) => (
+    <motion.div 
+      key={index}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      style={{ 
+        background: '#ffffff', 
+        borderRadius: '24px', 
+        border: '1px solid #f1f5f9', 
+        boxShadow: '0 15px 35px rgba(0,0,0,0.03)', 
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%'
+      }}
+    >
+      {/* Top half with grid and glowing app icon */}
+      <div style={{ height: '180px', width: '100%', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', borderBottom: '1px solid #f8fafc', background: '#fafafa' }}>
+         <svg viewBox="0 0 300 180" style={{ position: 'absolute', width: '100%', height: '100%', zIndex: 0 }}>
+           <pattern id={`grid-pattern-${index}`} width="25" height="25" patternUnits="userSpaceOnUse">
+             <path d="M 25 0 L 0 0 0 25" fill="none" stroke="#f1f5f9" strokeWidth="1" />
+           </pattern>
+           <rect width="100%" height="100%" fill={`url(#grid-pattern-${index})`} />
+           
+           {/* Soft colored grid squares */}
+           <rect x="25" y="25" width="25" height="25" fill={feature.bulletColor} opacity="0.06" />
+           <rect x="200" y="100" width="25" height="25" fill={feature.bulletColor} opacity="0.08" />
+           <rect x="50" y="125" width="25" height="25" fill={feature.bulletColor} opacity="0.04" />
+         </svg>
+         
+         {/* Glassmorphic Icon Wrapper */}
+         <div style={{ 
+           position: 'relative', 
+           zIndex: 1, 
+           width: '72px', 
+           height: '72px', 
+           borderRadius: '20px', 
+           background: `linear-gradient(135deg, ${feature.gradientStart}, ${feature.gradientEnd})`,
+           boxShadow: `0 15px 30px ${feature.shadowColor}, inset 0 2px 4px rgba(255,255,255,0.4)`,
+           display: 'flex',
+           justifyContent: 'center',
+           alignItems: 'center',
+           color: 'white'
+         }}>
+           <feature.icon size={32} strokeWidth={2} />
+           {/* Glass reflection layer */}
+           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '50%', background: 'linear-gradient(to bottom, rgba(255,255,255,0.3), transparent)', borderRadius: '20px 20px 0 0' }}></div>
+         </div>
+      </div>
+      
+      {/* Bottom half with text */}
+      <div style={{ padding: '32px 24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <h4 style={{ fontSize: '20px', fontWeight: 800, color: '#1e293b', marginBottom: '12px', lineHeight: 1.3 }}>{feature.title}</h4>
+        <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, margin: 0 }}>{feature.description}</p>
+      </div>
+    </motion.div>
+  );
 
   return (
     <div className="page-container hora-services-intro">
@@ -136,131 +208,127 @@ export default function HoraServicesIntro() {
         </div>
       </div>
 
-      {/* Feature Grid with Illustrations */}
-      <section style={{ padding: '120px 40px', background: '#ffffff' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+      {/* Staggered Features Section */}
+      <section style={{ padding: '120px 40px', background: '#ffffff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        
+        {/* Top Header */}
+        <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 80px auto' }}>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: '#fef2f2', color: '#ef4444', borderRadius: '100px', fontSize: '14px', fontWeight: 600, marginBottom: '24px', border: '1px solid #fee2e2' }}
+          >
+            <span style={{ fontSize: '18px' }}>⚡</span> One Platform
+          </motion.div>
           
-          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-            <h2 style={{ fontSize: '40px', fontWeight: 800, color: '#1e293b' }}>Everything you need to ship.</h2>
-            <p style={{ fontSize: '18px', color: '#64748b', marginTop: '16px' }}>Four powerful tools seamlessly integrated into one platform.</p>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            style={{ fontSize: '48px', fontWeight: 800, color: '#1e293b', lineHeight: 1.1, marginBottom: '24px' }}
+          >
+            Everything you need to ship.
+          </motion.h2>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            style={{ fontSize: '18px', color: '#64748b', lineHeight: 1.6 }}
+          >
+            Four powerful tools seamlessly integrated into one platform.
+          </motion.p>
+        </div>
+
+        <div style={{ maxWidth: '1380px', width: '100%', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: '80px', alignItems: 'center' }}>
+          
+          {/* Left Illustration */}
+          <motion.div 
+             initial={{ opacity: 0, x: -30 }}
+             whileInView={{ opacity: 1, x: 0 }}
+             viewport={{ once: true }}
+             transition={{ duration: 0.7 }}
+             style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          >
+             <svg viewBox="0 0 500 700" style={{ width: '100%', maxWidth: '450px', height: 'auto', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.05))' }}>
+                <defs>
+                  <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#f43f5e" />
+                    <stop offset="100%" stopColor="#f97316" />
+                  </linearGradient>
+                  <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#3b82f6" />
+                    <stop offset="100%" stopColor="#0ea5e9" />
+                  </linearGradient>
+                  <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#8b5cf6" />
+                    <stop offset="100%" stopColor="#d946ef" />
+                  </linearGradient>
+                  <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#10b981" />
+                    <stop offset="100%" stopColor="#14b8a6" />
+                  </linearGradient>
+                  <pattern id="dotGrid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1.5" fill="#e2e8f0" />
+                  </pattern>
+                </defs>
+
+                {/* Background Board */}
+                <rect width="500" height="700" fill="#f8fafc" rx="40" stroke="#f1f5f9" strokeWidth="2" />
+                <rect width="500" height="700" fill="url(#dotGrid)" rx="40" opacity="0.6" />
+
+                {/* Central Flow Line */}
+                <path d="M 250 80 L 250 620" stroke="#cbd5e1" strokeWidth="3" strokeDasharray="8 8" />
+
+                {/* Node 1 - Plan */}
+                <path d="M 230 180 L 140 180" stroke="#f43f5e" strokeWidth="3" />
+                <rect x="40" y="130" width="100" height="100" rx="20" fill="white" stroke="#ffe4e6" strokeWidth="2" />
+                <rect x="65" y="155" width="50" height="50" rx="14" fill="url(#g1)" />
+                <circle cx="250" cy="180" r="12" fill="white" stroke="#f43f5e" strokeWidth="4" />
+
+                {/* Node 2 - Measure */}
+                <path d="M 270 300 L 360 300" stroke="#3b82f6" strokeWidth="3" />
+                <rect x="360" y="250" width="100" height="100" rx="20" fill="white" stroke="#dbeafe" strokeWidth="2" />
+                <rect x="385" y="275" width="50" height="50" rx="14" fill="url(#g2)" />
+                <circle cx="250" cy="300" r="12" fill="white" stroke="#3b82f6" strokeWidth="4" />
+
+                {/* Node 3 - Communicate */}
+                <path d="M 230 420 L 140 420" stroke="#8b5cf6" strokeWidth="3" />
+                <rect x="40" y="370" width="100" height="100" rx="20" fill="white" stroke="#ede9fe" strokeWidth="2" />
+                <rect x="65" y="395" width="50" height="50" rx="14" fill="url(#g3)" />
+                <circle cx="250" cy="420" r="12" fill="white" stroke="#8b5cf6" strokeWidth="4" />
+
+                {/* Node 4 - Govern */}
+                <path d="M 270 540 L 360 540" stroke="#10b981" strokeWidth="3" />
+                <rect x="360" y="490" width="100" height="100" rx="20" fill="white" stroke="#d1fae5" strokeWidth="2" />
+                <rect x="385" y="515" width="50" height="50" rx="14" fill="url(#g4)" />
+                <circle cx="250" cy="540" r="12" fill="white" stroke="#10b981" strokeWidth="4" />
+                
+             </svg>
+          </motion.div>
+          
+          {/* Right Staggered Grid */}
+          <div style={{ position: 'relative' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', alignItems: 'start' }}>
+               
+               {/* Column 1 (Cards 1 & 3) */}
+               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginTop: '80px' }}>
+                  {renderCard(platformFeatures[0], 0)}
+                  {renderCard(platformFeatures[2], 2)}
+               </div>
+
+               {/* Column 2 (Cards 2 & 4) */}
+               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '80px' }}>
+                  {renderCard(platformFeatures[1], 1)}
+                  {renderCard(platformFeatures[3], 3)}
+               </div>
+               
+            </div>
           </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '40px' }}>
-            
-            {/* 01 Plan */}
-            <motion.div 
-              style={{ background: '#f8fafc', borderRadius: '24px', overflow: 'hidden', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column' }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5 }}
-            >
-              <div style={{ height: '260px', width: '100%', background: '#fce7f3', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
-                 <svg viewBox="0 0 400 200" style={{ width: '100%', height: '100%' }}>
-                   <circle cx="200" cy="100" r="160" fill="#fbcfe8" opacity="0.4" />
-                   <rect x="80" y="50" width="60" height="90" rx="8" fill="#ffffff" filter="drop-shadow(0 10px 15px rgba(219,39,119,0.15))" />
-                   <rect x="170" y="30" width="60" height="130" rx="8" fill="#ffffff" filter="drop-shadow(0 10px 15px rgba(219,39,119,0.15))" />
-                   <rect x="260" y="70" width="60" height="70" rx="8" fill="#ffffff" filter="drop-shadow(0 10px 15px rgba(219,39,119,0.15))" />
-                   
-                   <path d="M 140 90 L 170 90" fill="none" stroke="#db2777" strokeWidth="3" strokeDasharray="4 4" />
-                   <path d="M 230 110 L 260 110" fill="none" stroke="#db2777" strokeWidth="3" strokeDasharray="4 4" />
-                   
-                   <rect x="90" y="70" width="40" height="6" rx="3" fill="#fbcfe8" />
-                   <rect x="180" y="50" width="40" height="6" rx="3" fill="#fbcfe8" />
-                   <rect x="270" y="90" width="40" height="6" rx="3" fill="#fbcfe8" />
-                   <rect x="180" y="70" width="40" height="6" rx="3" fill="#fbcfe8" />
-                 </svg>
-              </div>
-              <div style={{ padding: '40px', background: 'white', flex: 1, borderTop: '1px solid #f1f5f9' }}>
-                 <h4 style={{ fontSize: '24px', fontWeight: 800, color: '#1e293b', marginBottom: '16px' }}>01 Plan — Sprint boards, DFD-native</h4>
-                 <p style={{ fontSize: '16px', color: '#475569', lineHeight: 1.6, margin: 0 }}>Flow-based boards that map how work actually moves — branch, PR, review, deploy — not just three generic columns.</p>
-              </div>
-            </motion.div>
-
-            {/* 02 Measure */}
-            <motion.div 
-              style={{ background: '#f8fafc', borderRadius: '24px', overflow: 'hidden', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column' }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <div style={{ height: '260px', width: '100%', background: '#f3e8ff', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
-                 <svg viewBox="0 0 400 200" style={{ width: '100%', height: '100%' }}>
-                   <circle cx="200" cy="100" r="160" fill="#e9d5ff" opacity="0.4" />
-                   <rect x="100" y="130" width="30" height="40" rx="4" fill="#c084fc" filter="drop-shadow(0 4px 6px rgba(147,51,234,0.2))" />
-                   <rect x="150" y="90" width="30" height="80" rx="4" fill="#a855f7" filter="drop-shadow(0 4px 6px rgba(147,51,234,0.2))" />
-                   <rect x="200" y="110" width="30" height="60" rx="4" fill="#9333ea" filter="drop-shadow(0 4px 6px rgba(147,51,234,0.2))" />
-                   <rect x="250" y="50" width="30" height="120" rx="4" fill="#7e22ce" filter="drop-shadow(0 4px 6px rgba(147,51,234,0.2))" />
-                   
-                   <path d="M 115 120 L 165 70 L 215 90 L 265 40" fill="none" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.15))" />
-                   <circle cx="265" cy="40" r="6" fill="#ffffff" />
-                 </svg>
-              </div>
-              <div style={{ padding: '40px', background: 'white', flex: 1, borderTop: '1px solid #f1f5f9' }}>
-                 <h4 style={{ fontSize: '24px', fontWeight: 800, color: '#1e293b', marginBottom: '16px' }}>02 Measure — Hora Matrix</h4>
-                 <p style={{ fontSize: '16px', color: '#475569', lineHeight: 1.6, margin: 0 }}>Deployment frequency, lead time, change failure rate and MTTR — computed from your GitHub activity, not estimated.</p>
-              </div>
-            </motion.div>
-
-            {/* 03 Communicate */}
-            <motion.div 
-              style={{ background: '#f8fafc', borderRadius: '24px', overflow: 'hidden', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column' }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <div style={{ height: '260px', width: '100%', background: '#fef3c7', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
-                 <svg viewBox="0 0 400 200" style={{ width: '100%', height: '100%' }}>
-                   <circle cx="200" cy="100" r="160" fill="#fde68a" opacity="0.4" />
-                   
-                   {/* Chat Bubble 1 */}
-                   <rect x="90" y="50" width="160" height="70" rx="20" fill="#ffffff" filter="drop-shadow(0 10px 20px rgba(217,119,6,0.15))" />
-                   <path d="M 120 120 L 120 140 L 145 120 Z" fill="#ffffff" />
-                   <rect x="120" y="75" width="100" height="6" rx="3" fill="#fcd34d" />
-                   <rect x="120" y="95" width="120" height="6" rx="3" fill="#fcd34d" />
-                   
-                   {/* Chat Bubble 2 */}
-                   <rect x="180" y="100" width="140" height="60" rx="20" fill="#f59e0b" filter="drop-shadow(0 10px 20px rgba(217,119,6,0.25))" />
-                   <path d="M 290 160 L 290 180 L 265 160 Z" fill="#f59e0b" />
-                   <rect x="210" y="120" width="80" height="6" rx="3" fill="#ffffff" opacity="0.9" />
-                   <rect x="210" y="135" width="60" height="6" rx="3" fill="#ffffff" opacity="0.9" />
-                 </svg>
-              </div>
-              <div style={{ padding: '40px', background: 'white', flex: 1, borderTop: '1px solid #f1f5f9' }}>
-                 <h4 style={{ fontSize: '24px', fontWeight: 800, color: '#1e293b', marginBottom: '16px' }}>03 Communicate — Chat with slash commands</h4>
-                 <p style={{ fontSize: '16px', color: '#475569', lineHeight: 1.6, margin: 0 }}>Mention teammates, resolve threads on tickets, or run /standup to pull yesterday's commits into today's sync.</p>
-              </div>
-            </motion.div>
-
-            {/* 04 Govern */}
-            <motion.div 
-              style={{ background: '#f8fafc', borderRadius: '24px', overflow: 'hidden', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column' }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <div style={{ height: '260px', width: '100%', background: '#dbeafe', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
-                 <svg viewBox="0 0 400 200" style={{ width: '100%', height: '100%' }}>
-                   <circle cx="200" cy="100" r="160" fill="#bfdbfe" opacity="0.4" />
-                   
-                   {/* Shield */}
-                   <path d="M 200 40 L 260 60 L 260 110 C 260 150 200 170 200 170 C 200 170 140 150 140 110 L 140 60 L 200 40 Z" fill="#ffffff" filter="drop-shadow(0 15px 25px rgba(37,99,235,0.2))" />
-                   <path d="M 200 40 L 260 60 L 260 110 C 260 150 200 170 200 170 Z" fill="#eff6ff" />
-                   
-                   {/* Lock / Check */}
-                   <path d="M 175 110 L 195 130 L 230 90" fill="none" stroke="#3b82f6" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                 </svg>
-              </div>
-              <div style={{ padding: '40px', background: 'white', flex: 1, borderTop: '1px solid #f1f5f9' }}>
-                 <h4 style={{ fontSize: '24px', fontWeight: 800, color: '#1e293b', marginBottom: '16px' }}>04 Govern — Multi-tenant by default</h4>
-                 <p style={{ fontSize: '16px', color: '#475569', lineHeight: 1.6, margin: 0 }}>Org-scoped data, numeric RBAC levels, and label management that admins actually understand at a glance.</p>
-              </div>
-            </motion.div>
-
-          </div>
+          
         </div>
       </section>
 

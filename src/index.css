@@ -80,12 +80,10 @@ a {
 /* Zenpark Stacked Block System */
 /* --------------------------------------------------- */
 .page-container {
-  background: linear-gradient(to bottom, #fdfdfd, #f4f6f8);
+  background: #ffffff;
   min-height: 100vh;
-  padding: 40px 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .design-block {
@@ -178,7 +176,6 @@ a {
 }
 
 @media (max-width: 768px) {
-  .page-container { padding: 20px 10px; gap: 16px; }
   .design-block { border-radius: 30px !important; }
   .design-block-inner { padding: 40px 20px; }
 }
