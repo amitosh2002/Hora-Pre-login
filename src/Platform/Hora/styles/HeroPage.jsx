@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, BarChart3, MessageSquare, Shield, Activity, ArrowRight, PlayCircle, Terminal, Users, Target, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import DataVizGraphic from './DataVizGraphic';
+import HeroGraphic from '../../../components/Graphics/HeroGraphic';
 import './styles/HoraServicesIntro.scss';
 
 export default function HoraServicesIntro() {
@@ -172,40 +173,32 @@ export default function HoraServicesIntro() {
             </motion.p>
           </div>
           
-          <div className="hero-clean__collage">
-             <motion.div className="collage-circle collage-circle--1" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.2 }}>
-                <Terminal strokeWidth={1.5} />
-             </motion.div>
-             <motion.div className="collage-circle collage-circle--2" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.3 }}>
-                <Activity strokeWidth={1.5} />
-             </motion.div>
-             <motion.div className="collage-circle collage-circle--3" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.4 }}>
-                <Target strokeWidth={1.5} />
-             </motion.div>
-             <motion.div className="collage-circle collage-circle--4" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.5 }}>
-                <Zap strokeWidth={1.5} />
-             </motion.div>
-             <div className="dot dot--1"></div>
-             <div className="dot dot--2"></div>
-             <div className="dot dot--3"></div>
+          <div className="hero-clean__collage" style={{ width: '100%', height: '500px' }}>
+             <HeroGraphic />
           </div>
           
         </div>
       </section>
 
       {/* Ambient Ticker */}
-      <div style={{ width: '100%', background: '#f8fafc', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0', padding: '16px 0', overflow: 'hidden' }}>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', fontSize: '14px', fontWeight: 600, color: '#475569', flexWrap: 'wrap' }}>
-          <span>Lead time ↓ 18% this sprint</span>
-          <span style={{ color: '#cbd5e1' }}>•</span>
-          <span>Deploy frequency 3.2/day</span>
-          <span style={{ color: '#cbd5e1' }}>•</span>
-          <span>MTTR ↓ 40min</span>
-          <span style={{ color: '#cbd5e1' }}>•</span>
-          <span>Change failure rate 2.1%</span>
-          <span style={{ color: '#cbd5e1' }}>•</span>
-          <span style={{ color: '#8b5cf6' }}>Sprint 24 68% complete</span>
-        </div>
+      <div className="ambient-ticker">
+        {/* Render two identical tracks for seamless infinite scrolling */}
+        {[1, 2].map((track) => (
+          <div className="ambient-ticker__track" key={track} aria-hidden={track === 2}>
+            {[
+              "Lead time ↓ 18% this sprint",
+              "Deploy frequency 3.2/day",
+              "MTTR ↓ 40min",
+              "Change failure rate 2.1%",
+              "Sprint 24 68% complete"
+            ].map((item, index) => (
+              <div className="ambient-ticker__item" key={index}>
+                <span style={{ color: item.includes('Sprint 24') ? '#8b5cf6' : undefined }}>{item}</span>
+                <span className="ambient-ticker__point"></span>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
 
       {/* Staggered Features Section */}

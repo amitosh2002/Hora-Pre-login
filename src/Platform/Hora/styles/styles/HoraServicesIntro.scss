@@ -340,3 +340,72 @@
     grid-template-columns: 1fr;
   }
 }
+
+// ----------------------------------------------------------------------------
+// Ambient Ticker
+// ----------------------------------------------------------------------------
+.ambient-ticker {
+  width: 100%;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 16px 0;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  white-space: nowrap;
+}
+
+.ambient-ticker__track {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding-right: 40px;
+  animation: ticker-scroll 25s linear infinite;
+  will-change: transform;
+}
+
+.ambient-ticker:hover .ambient-ticker__track {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.ambient-ticker__item {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  cursor: default;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  
+  &:hover {
+    transform: scale(1.1);
+    color: #1e293b;
+    
+    .ambient-ticker__point {
+      border-color: #8b5cf6;
+      border-style: dotted;
+      animation-duration: 1.5s;
+    }
+  }
+}
+
+.ambient-ticker__point {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px dashed #cbd5e1;
+  animation: rotate-point 4s linear infinite;
+  display: inline-block;
+}
+
+@keyframes rotate-point {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
