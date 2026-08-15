@@ -10,6 +10,8 @@ export default function Footer() {
       <div className="app-footer__container">
         <div className="app-footer__brand">HORA</div>
         <nav className="app-footer__links">
+          <Link to="/about" className="app-footer__link">About Us</Link>
+          <Link to="/careers" className="app-footer__link">Careers</Link>
           <Link to="/terms-and-policy" className="app-footer__link">Terms of Service</Link>
           <Link to="/terms-and-policy#privacy" className="app-footer__link">Privacy Policy</Link>
         </nav>

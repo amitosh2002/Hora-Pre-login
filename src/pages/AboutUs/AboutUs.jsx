@@ -2,6 +2,7 @@ import React from 'react';
 import { Target, BrainCircuit, Users, CheckCircle2, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './AboutUs.scss';
+import { Navigate } from 'react-router-dom';
 
 export default function AboutUs() {
   const [activeMilestone, setActiveMilestone] = React.useState(3);
@@ -365,7 +366,7 @@ export default function AboutUs() {
         <p style={{ fontSize: '18px', opacity: 0.9, marginBottom: '32px', color: '#cbd5e1' }}>We're always looking for engineers who care about this kind of detail.</p>
         <button 
           style={{ background: '#8b5cf6', color: 'white', padding: '16px 32px', borderRadius: '8px', fontWeight: 700, fontSize: '16px', border: 'none', cursor: 'pointer' }}
-          onClick={() => window.location.href = 'https://app.hora.team/careers'}
+          onClick={() => Navigate('/careers')}
         >
           View Open Roles
         </button>

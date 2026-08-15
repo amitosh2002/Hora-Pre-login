@@ -5,6 +5,7 @@ import GitHubServicePage from './Platform/Hora/styles/GithubServicePage';
 import OverviewPage from './Platform/Hora/styles/OverviewPage';
 import TermsAndPolicy from './pages/TermsAndPolicy/TermsAndPolicy';
 import AboutUs from './pages/AboutUs/AboutUs';
+import Careers from './pages/Careers/Careers';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="overview" element={<OverviewPage />} />
           <Route path="terms-and-policy" element={<TermsAndPolicy />} />
           <Route path="about" element={<AboutUs />} />
+          <Route path="careers" element={<Careers />} />
         </Route>
       </Routes>
     </BrowserRouter>
