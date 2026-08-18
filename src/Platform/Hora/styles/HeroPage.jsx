@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, BarChart3, MessageSquare, Shield, Activity, ArrowRight, PlayCircle, Terminal, Users, Target, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -7,6 +7,8 @@ import HeroGraphic from '../../../components/Graphics/HeroGraphic';
 import './styles/HoraServicesIntro.scss';
 
 export default function HoraServicesIntro() {
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
+
   const platformFeatures = [
     {
       title: '01 Plan — Sprint boards, DFD-native',
@@ -158,8 +160,9 @@ export default function HoraServicesIntro() {
               </button>
               <button 
                 style={{ background: 'transparent', border: '1px solid #e2e8f0', color: '#475569', padding: '16px 32px', borderRadius: '8px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+                onClick={() => setIsDemoOpen(true)}
               >
-                <PlayCircle size={20} /> Watch 90s demo
+                <PlayCircle size={20} /> Demo
               </button>
             </motion.div>
             
@@ -412,6 +415,62 @@ export default function HoraServicesIntro() {
           Start building now
         </button>
       </section>
+
+      {/* Demo Modal */}
+      {isDemoOpen && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 9999,
+          padding: '20px'
+        }} onClick={() => setIsDemoOpen(false)}>
+          <div style={{
+            background: '#000',
+            borderRadius: '12px',
+            overflow: 'hidden',
+            width: '100%',
+            maxWidth: '800px',
+            position: 'relative'
+          }} onClick={e => e.stopPropagation()}>
+            <button 
+              onClick={() => setIsDemoOpen(false)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'rgba(255, 255, 255, 0.2)',
+                border: 'none',
+                color: 'white',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 10,
+                fontSize: '16px'
+              }}
+              aria-label="Close demo"
+            >
+              ✕
+            </button>
+            <iframe
+              src="https://player.cloudinary.com/embed/?cloud_name=dwo8ge51h&public_id=https_rescloudinarycom_dwo_asszx6"
+              width="640"
+              height="360" 
+              style={{ height: 'auto', width: '100%', aspectRatio: '640 / 360', display: 'block' }}
+              allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+              allowFullScreen
+              frameBorder="0"
+            ></iframe>
+          </div>
+        </div>
+      )}
 
     </div>
   );
