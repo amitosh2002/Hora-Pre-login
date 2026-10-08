@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, BarChart3, MessageSquare, Shield, Activity, ArrowRight, PlayCircle, Terminal, Users, Target, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import DataVizGraphic from './DataVizGraphic';
 import HeroGraphic from '../../../components/Graphics/HeroGraphic';
 import './styles/HoraServicesIntro.scss';
+import { FRIDAY_LANDING_SCENES } from '../../../components/FridayStoryboard';
+
+const FridayStoryboard = lazy(() => import('../../../components/FridayStoryboard'));
 
 export default function HoraServicesIntro() {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
@@ -12,7 +15,7 @@ export default function HoraServicesIntro() {
   const platformFeatures = [
     {
       title: '01 Plan — Sprint boards, DFD-native',
-      description: 'Flow-based boards that map how work actually moves — branch, PR, review, deploy — not just three generic columns.',
+      description: 'Flow-based boards that map how work actually moves — branch, PR, review, deploy — powered by Friday for explainable ticket routing.',
       icon: LayoutDashboard,
       gradientStart: '#f43f5e',
       gradientEnd: '#f97316',
@@ -30,7 +33,7 @@ export default function HoraServicesIntro() {
     },
     {
       title: '03 Communicate — Chat with slash commands',
-      description: 'Mention teammates, resolve threads on tickets, or run /standup to pull yesterday\'s commits into today\'s sync.',
+      description: 'Mention teammates, resolve threads on tickets, or let Friday post /standup summaries to pull yesterday\'s commits into today\'s sync.',
       icon: MessageSquare,
       gradientStart: '#8b5cf6',
       gradientEnd: '#d946ef',
@@ -182,6 +185,17 @@ export default function HoraServicesIntro() {
           
         </div>
       </section>
+
+      {/* Friday Storyboard Showcase (Landing High-Velocity Tour) */}
+      <Suspense fallback={<div style={{ minHeight: '400px', background: '#ffffff' }} />}>
+        <FridayStoryboard 
+          scenes={FRIDAY_LANDING_SCENES}
+          heading="Meet Friday, the PM that speaks fluent git."
+          subtitle="Friday reads each ticket, checks who has room, and recommends an owner with verified code context. Anything uncertain waits for you."
+          badge="Sprint Automation Engine"
+          showArticleLink={true}
+        />
+      </Suspense>
 
       {/* Ambient Ticker */}
       <div className="ambient-ticker">

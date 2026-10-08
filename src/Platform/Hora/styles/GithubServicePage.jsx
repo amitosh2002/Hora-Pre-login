@@ -248,6 +248,52 @@ export default function GitHubServicePage() {
               </div>
             </motion.div>
 
+            {/* Card 4: Repo manifests & PRs → Friday Engine */}
+            <motion.div 
+              style={{ background: '#ffffff', borderRadius: '24px', overflow: 'hidden', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <div style={{ height: '280px', width: '100%', background: '#f8fafc', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', overflow: 'hidden', borderBottom: '1px solid #f1f5f9' }}>
+                 <svg viewBox="0 0 400 250" style={{ width: '100%', height: '100%' }}>
+                   <pattern id="gh4" width="40" height="40" patternUnits="userSpaceOnUse">
+                     <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" strokeWidth="1" opacity="0.5"/>
+                   </pattern>
+                   <rect width="400" height="250" fill="url(#gh4)" />
+                   
+                   {/* Manifest chips & PRs UI */}
+                   <rect x="40" y="75" width="130" height="100" rx="12" fill="#ffffff" filter="drop-shadow(0 10px 15px rgba(139,92,246,0.1))" stroke="#ddd6fe" strokeWidth="2" />
+                   <rect x="55" y="90" width="100" height="18" rx="4" fill="#f5f3ff" />
+                   <circle cx="65" cy="99" r="4" fill="#8b5cf6" />
+                   <text x="75" y="103" fontSize="9" fontWeight="700" fill="#7c3aed" fontFamily="sans-serif">package.json: node</text>
+                   
+                   <rect x="55" y="115" width="100" height="18" rx="4" fill="#f5f3ff" />
+                   <circle cx="65" cy="124" r="4" fill="#8b5cf6" />
+                   <text x="75" y="128" fontSize="9" fontWeight="700" fill="#7c3aed" fontFamily="sans-serif">docker-compose.yml</text>
+                   
+                   <rect x="55" y="140" width="100" height="18" rx="4" fill="#f0fdf4" />
+                   <circle cx="65" cy="149" r="4" fill="#10b981" />
+                   <text x="75" y="153" fontSize="9" fontWeight="700" fill="#15803d" fontFamily="sans-serif">PR #84 merged ✓</text>
+                   
+                   {/* Transform arrow */}
+                   <path d="M 185 125 L 215 125 M 210 120 L 215 125 L 210 130" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                   
+                   {/* Friday Recommendation Score Card */}
+                   <rect x="230" y="75" width="130" height="100" rx="12" fill="#ffffff" filter="drop-shadow(0 10px 15px rgba(0,0,0,0.05))" stroke="#c4b5fd" strokeWidth="1.5" />
+                   <rect x="245" y="90" width="100" height="22" rx="6" fill="#ede9fe" />
+                   <text x="295" y="105" fontSize="10" fontWeight="700" fill="#6b21a8" fontFamily="sans-serif" textAnchor="middle">Friday Score: 87</text>
+                   <text x="295" y="132" fontSize="12" fill="#1e293b" fontFamily="sans-serif" fontWeight="800" textAnchor="middle">Priya (Rank #1)</text>
+                   <text x="295" y="152" fontSize="10" fill="#10b981" fontFamily="sans-serif" fontWeight="600" textAnchor="middle">Auto-assign eligible</text>
+                 </svg>
+              </div>
+              <div style={{ padding: '32px' }}>
+                 <h4 style={{ fontSize: '22px', fontWeight: 800, color: '#1e293b', margin: '0 0 12px 0' }}>Repo manifests & PRs → Friday Assignment Engine</h4>
+                 <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, margin: 0 }}>Manifest tags (Node, Redis, Docker), PR history, and authorship data feed Friday's six-factor capability model directly — so Friday recommends assignments based on verified code experience, not guesses.</p>
+              </div>
+            </motion.div>
+
           </div>
         </div>
       </section>

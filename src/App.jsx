@@ -3,6 +3,7 @@ import Layout from './components/Layout/Layout';
 import HoraServicesIntro from './Platform/Hora/styles/HeroPage';
 import GitHubServicePage from './Platform/Hora/styles/GithubServicePage';
 import OverviewPage from './Platform/Hora/styles/OverviewPage';
+import FridayPage from './Platform/Hora/styles/FridayPage';
 import TermsAndPolicy from './pages/TermsAndPolicy/TermsAndPolicy';
 import AboutUs from './pages/AboutUs/AboutUs';
 import Careers from './pages/Careers/Careers';
@@ -15,6 +16,7 @@ function App() {
           <Route index element={<HoraServicesIntro />} />
           <Route path="github-services" element={<GitHubServicePage />} />
           <Route path="overview" element={<OverviewPage />} />
+          <Route path="friday" element={<FridayPage />} />
           <Route path="terms-and-policy" element={<TermsAndPolicy />} />
           <Route path="about" element={<AboutUs />} />
           <Route path="careers" element={<Careers />} />

@@ -1,11 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   BarChart3,
   MessageSquare,
   Shield,
   LayoutDashboard,
   BrainCircuit,
-  ArrowRight
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './styles/OverviewPage.scss';
@@ -15,11 +17,11 @@ export default function OverviewPage() {
   const platformFeatures = [
     {
       title: '01 Plan',
-      description: 'SprintFlowBoardV2 uses a flow-based layout with transition case labels — so a ticket\'s state reflects branch → PR → review → deploy, not a generic three-column guess.',
+      description: 'SprintFlowBoardV2 uses a flow-based layout with transition case labels — paired with Friday for deterministic ticket scoring and overload protection.',
       bullets: [
         'DFD-style flow board — states model your real delivery pipeline',
+        'Friday PM engine — explainable ticket recommendations & queue balancing',
         'Multi-step project creation — set up scope, team and working hours',
-        'Gantt view — timeline across tasks',
         'Capacity & burn-down — logged time against defined working hours'
       ],
       icon: LayoutDashboard,
@@ -45,12 +47,12 @@ export default function OverviewPage() {
     },
     {
       title: '03 Communicate',
-      description: 'Chat that understands your workflow. Comment and @mention directly on tickets, and use slash commands to pull real project data into the conversation.',
+      description: 'Chat that understands your workflow. Comment and @mention directly on tickets, and use slash commands with Friday summaries to pull real project data into sync.',
       bullets: [
         'Slash commands — /standup, /assign, /blocker pull live data',
+        'Friday sprint summaries — automated standup reports & blocker tracking',
         'Threaded comments — discussion stays attached to the ticket',
-        '@mentions — notify the right person without leaving the board',
-        'WFH request flows — handled in the same place as the work itself'
+        '@mentions — notify the right person without leaving the board'
       ],
       icon: MessageSquare,
       gradientStart: '#8b5cf6',
@@ -177,7 +179,7 @@ export default function OverviewPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Plan sprints, measure delivery, keep the team in sync, and stay in control of who sees what — without stitching together four different products.
+              Plan sprints with Friday, measure delivery with Hora Matrix, keep the team in sync, and stay in control of who sees what — without stitching together four different products.
             </motion.p>
             
             <motion.div 
@@ -331,7 +333,76 @@ export default function OverviewPage() {
         </div>
       </section>
 
-      {/* AI Section (Simplified visually to match clean aesthetic) */}
+      {/* Friday AI PM Spotlight Section */}
+      <section style={{ background: '#ffffff', padding: '100px 40px', borderTop: '1px solid #f1f5f9' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '60px', alignItems: 'center' }}>
+          <div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', background: '#f5f3ff', color: '#7c3aed', borderRadius: '100px', fontSize: '13px', fontWeight: 700, marginBottom: '20px', border: '1px solid #ede9fe' }}>
+              <Sparkles size={14} /> Friday AI Spotlight
+            </div>
+            <h2 style={{ fontSize: '42px', fontWeight: 800, color: '#0f172a', lineHeight: 1.2, marginBottom: '20px' }}>
+              Meet Friday, the PM that explains itself.
+            </h2>
+            <p style={{ fontSize: '18px', color: '#64748b', lineHeight: 1.6, marginBottom: '28px' }}>
+              Friday reads each ticket, checks verified code history from repo manifests, and recommends an owner using a transparent 6-factor deterministic calculation. No hallucinated tickets, and zero unprompted force-assignments.
+            </p>
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+              <Link 
+                to="/friday" 
+                style={{ 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  gap: '8px', 
+                  background: '#8b5cf6', 
+                  color: '#ffffff', 
+                  padding: '14px 28px', 
+                  borderRadius: '10px', 
+                  fontWeight: 700, 
+                  fontSize: '15px', 
+                  textDecoration: 'none',
+                  boxShadow: '0 4px 14px rgba(139, 92, 246, 0.25)'
+                }}
+              >
+                Read Full Friday Article & Specification <ArrowRight size={18} />
+              </Link>
+            </div>
+          </div>
+
+          {/* Feature Teaser Card */}
+          <div style={{ background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '20px', padding: '28px', display: 'flex', flexDirection: 'column', gap: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.03)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '12px' }}>
+              <span style={{ fontSize: '13px', fontWeight: 800, color: '#7c3aed' }}>
+                Deterministic Architecture
+              </span>
+              <span style={{ fontSize: '11px', color: '#059669', background: '#ecfdf5', padding: '3px 8px', borderRadius: '4px', fontWeight: 700 }}>
+                Auditable · Zero Black Boxes
+              </span>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ width: '28px', height: '28px', borderRadius: '6px', background: '#f5f3ff', color: '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '12px' }}>6F</span>
+                <div style={{ fontSize: '13px', color: '#1e293b', fontWeight: 600 }}>Six-factor linear capability equation (Skill, Context, Headroom)</div>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ width: '28px', height: '28px', borderRadius: '6px', background: '#eff6ff', color: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '12px' }}>5G</span>
+                <div style={{ fontSize: '13px', color: '#1e293b', fontWeight: 600 }}>Five safety triage policy gates (Auto-assign to Review required)</div>
+              </div>
+              <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ width: '28px', height: '28px', borderRadius: '6px', background: '#ecfdf5', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '12px' }}>0O</span>
+                <div style={{ fontSize: '13px', color: '#1e293b', fontWeight: 600 }}>Zero-overload ceiling: Engineers at capacity are never assigned</div>
+              </div>
+            </div>
+
+            <Link to="/friday" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', background: '#f5f3ff', borderRadius: '8px', color: '#6b21a8', fontSize: '12px', fontWeight: 700, textDecoration: 'none' }}>
+              <span>Experience interactive 7-scene storyboard on the dedicated page</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Section (Deterministic Engine + Plain English Summaries) */}
       <section style={{ background: '#f8fafc', padding: '120px 40px' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '60px', alignItems: 'center' }}>
             
@@ -340,21 +411,21 @@ export default function OverviewPage() {
               <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#1e293b', marginBottom: '24px' }}>AI that reports, not guesses.</h2>
               
               <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.6, marginBottom: '40px' }}>
-                Every number in Hora Matrix comes from a deterministic calculation against your actual GitHub and time-log data. AI only writes the summary on top, in plain language.
+                Every number in Hora Matrix and every recommendation from Friday comes from deterministic calculations against your actual GitHub and time-log data. AI only writes the summary on top, in plain language.
               </p>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', background: 'white', padding: '32px', borderRadius: '24px', border: '1px solid #e2e8f0', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
                 <div style={{ display: 'flex', gap: '16px' }}>
                   <div style={{ background: '#f1f5f9', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#64748b', flexShrink: 0 }}>1</div>
-                  <div style={{ fontSize: '15px', color: '#475569' }}><strong style={{ color: '#1e293b' }}>Raw data:</strong> Commits, PRs, deploys, branch events, time logs.</div>
+                  <div style={{ fontSize: '15px', color: '#475569' }}><strong style={{ color: '#1e293b' }}>Raw repo data:</strong> Commits, PRs, manifests (Node, Redis, Docker), branch events, time logs.</div>
                 </div>
                 <div style={{ display: 'flex', gap: '16px' }}>
                   <div style={{ background: '#f1f5f9', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#64748b', flexShrink: 0 }}>2</div>
-                  <div style={{ fontSize: '15px', color: '#475569' }}><strong style={{ color: '#1e293b' }}>Deterministic calculation:</strong> Fixed formulas, run against your data.</div>
+                  <div style={{ fontSize: '15px', color: '#475569' }}><strong style={{ color: '#1e293b' }}>Deterministic calculations:</strong> Fixed DORA formulas and Friday's six-factor capability scoring model.</div>
                 </div>
                 <div style={{ display: 'flex', gap: '16px' }}>
                   <div style={{ background: '#e0e7ff', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#4f46e5', flexShrink: 0 }}>3</div>
-                  <div style={{ fontSize: '15px', color: '#475569' }}><strong style={{ color: '#1e293b' }}>You see both:</strong> The exact number, and the sentence explaining it.</div>
+                  <div style={{ fontSize: '15px', color: '#475569' }}><strong style={{ color: '#1e293b' }}>You see both:</strong> The exact math and audit factors, plus Friday's natural language explanation.</div>
                 </div>
               </div>
             </div>

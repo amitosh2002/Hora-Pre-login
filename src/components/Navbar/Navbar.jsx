@@ -19,6 +19,7 @@ export default function Navbar() {
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/overview', label: 'Platform' },
+    { to: '/friday', label: 'Friday AI' },
     { to: '/github-services', label: 'Integrations' },
     { to: '/about', label: 'Company' },
   ];
