@@ -1,0 +1,21 @@
+# Robots.txt for Hora Platform (Configured for Googlebot & Bingbot Search Indexing)
+User-agent: *
+Allow: /
+Allow: /overview
+Allow: /github-services
+Allow: /about
+Allow: /Hora-prelogin
+Allow: /login
+Allow: /register
+Allow: /marketplace
+Allow: /help
+Allow: /partner
+
+# Disallow private user workspace & administrative routes from search indexing
+Disallow: /user-work-space
+Disallow: /workspace/
+Disallow: /sprint/
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://hora.team/sitemap.xml
