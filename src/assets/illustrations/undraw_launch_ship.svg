@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="100%" height="100%" role="img" aria-label="Ship and Release to Production Illustration">
+  <defs>
+    <linearGradient id="fsbRocketBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#ede9fe" />
+    </linearGradient>
+    <linearGradient id="fsbRocketFlame" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="50%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#ef4444" />
+    </linearGradient>
+    <linearGradient id="fsbTrailGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#7c3aed" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Clouds & Ground -->
+  <ellipse cx="450" cy="540" rx="360" ry="22" fill="#e2e8f0" opacity="0.6" />
+
+  <!-- Cloud Base Puffs -->
+  <g fill="#f8fafc" stroke="#e2e8f0" stroke-width="2">
+    <circle cx="280" cy="480" r="60" />
+    <circle cx="370" cy="460" r="75" />
+    <circle cx="470" cy="450" r="80" />
+    <circle cx="560" cy="460" r="70" />
+    <circle cx="640" cy="485" r="55" />
+  </g>
+
+  <!-- Exhaust Plume Trail -->
+  <path d="M 410 320 Q 380 430 350 480 L 550 480 Q 520 430 490 320 Z" fill="url(#fsbTrailGrad)" />
+  <path d="M 425 320 Q 400 400 390 450 L 510 450 Q 500 400 475 320 Z" fill="#ede9fe" opacity="0.6" />
+
+  <!-- Rocket Ship -->
+  <g class="fsb-illu-rocket" transform="translate(450, 200)">
+    <!-- Rocket Thruster Flames -->
+    <path class="fsb-rocket-flame" d="M -22 100 Q 0 170 0 190 Q 0 170 22 100 Z" fill="url(#fsbRocketFlame)" />
+    <path class="fsb-rocket-flame-core" d="M -12 100 Q 0 145 0 155 Q 0 145 12 100 Z" fill="#fef08a" />
+
+    <!-- Left Fin -->
+    <path d="M -30 60 L -75 110 L -45 115 L -26 88 Z" fill="#7c3aed" />
+    <!-- Right Fin -->
+    <path d="M 30 60 L 75 110 L 45 115 L 26 88 Z" fill="#7c3aed" />
+
+    <!-- Main Rocket Fuselage -->
+    <path d="M 0 -130 C 48 -50 48 50 32 100 L -32 100 C -48 50 -48 -50 0 -130 Z" fill="url(#fsbRocketBody)" stroke="#c4b5fd" stroke-width="3" filter="drop-shadow(0 10px 20px rgba(124, 58, 237, 0.2))" />
+
+    <!-- Nose Cone Accent -->
+    <path d="M 0 -130 C 24 -90 28 -70 28 -60 L -28 -60 C -28 -70 -24 -90 0 -130 Z" fill="#7c3aed" />
+
+    <!-- Rocket Window / Porthole -->
+    <circle cx="0" cy="-10" r="26" fill="#7c3aed" />
+    <circle cx="0" cy="-10" r="20" fill="#ede9fe" />
+    <circle cx="0" cy="-10" r="16" fill="#60a5fa" />
+    <path d="M -8 -18 A 12 12 0 0 1 8 -18" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Center Fin Ridge -->
+    <rect x="-3" y="40" width="6" height="60" rx="3" fill="#8b5cf6" />
+
+    <!-- Status light -->
+    <circle cx="0" cy="80" r="5" fill="#10b981" />
+  </g>
+
+  <!-- Left Dev / Engineer Cheering Character -->
+  <g class="fsb-illu-char-left" transform="translate(180, 240)">
+    <!-- Legs -->
+    <path d="M 40 200 L 25 290 L 50 290 L 60 200 Z" fill="#1e1b4b" />
+    <path d="M 70 200 L 80 290 L 105 290 L 85 200 Z" fill="#2f2e41" />
+    <rect x="15" y="290" width="35" height="12" rx="4" fill="#090814" />
+    <rect x="75" y="290" width="35" height="12" rx="4" fill="#090814" />
+
+    <!-- Torso -->
+    <path d="M 30 110 Q 60 100 90 110 L 85 205 Q 60 215 35 205 Z" fill="#6c63ff" />
+
+    <!-- Neck & Head -->
+    <rect x="52" y="85" width="16" height="20" fill="#ed9da0" rx="3" />
+    <ellipse cx="60" cy="65" rx="22" ry="24" fill="#ed9da0" />
+    <!-- Hair -->
+    <path d="M 40 60 C 38 35 70 25 82 45 C 85 55 82 75 75 80 C 72 65 65 52 50 55 Z" fill="#2f2e41" />
+
+    <!-- Left Arm raised celebrating -->
+    <path d="M 35 120 Q -5 70 15 20" fill="none" stroke="#6c63ff" stroke-width="14" stroke-linecap="round" />
+    <circle cx="15" cy="18" r="7" fill="#ed9da0" />
+
+    <!-- Right Arm holding laptop / release console -->
+    <path d="M 85 120 Q 110 150 90 170" fill="none" stroke="#6c63ff" stroke-width="14" stroke-linecap="round" />
+    <rect x="80" y="150" width="34" height="24" rx="3" fill="#0f172a" />
+    <rect x="82" y="152" width="30" height="20" rx="2" fill="#10b981" />
+  </g>
+
+  <!-- Right Dev / Release Specialist -->
+  <g class="fsb-illu-char-right" transform="translate(620, 240)">
+    <!-- Legs -->
+    <path d="M 40 200 L 30 290 L 55 290 L 60 200 Z" fill="#2f2e41" />
+    <path d="M 70 200 L 75 290 L 100 290 L 85 200 Z" fill="#1e1b4b" />
+    <rect x="20" y="290" width="35" height="12" rx="4" fill="#090814" />
+    <rect x="70" y="290" width="35" height="12" rx="4" fill="#090814" />
+
+    <!-- Torso -->
+    <path d="M 35 110 Q 65 100 95 110 L 90 205 Q 65 215 40 205 Z" fill="#7c3aed" />
+
+    <!-- Head -->
+    <rect x="58" y="85" width="16" height="20" fill="#ffb6b6" rx="3" />
+    <ellipse cx="66" cy="65" rx="22" ry="24" fill="#ffb6b6" />
+    <!-- Hair -->
+    <path d="M 45 65 C 45 40 85 30 90 60 C 92 75 88 85 80 88 C 75 70 65 58 52 62 Z" fill="#090814" />
+
+    <!-- Right Arm raised celebrating -->
+    <path d="M 90 120 Q 130 70 110 20" fill="none" stroke="#7c3aed" stroke-width="14" stroke-linecap="round" />
+    <circle cx="110" cy="18" r="7" fill="#ffb6b6" />
+
+    <!-- Left Arm -->
+    <path d="M 40 120 Q 20 150 40 170" fill="none" stroke="#7c3aed" stroke-width="14" stroke-linecap="round" />
+  </g>
+
+  <!-- Floating Released Badge & Twinkling Stars -->
+  <g class="fsb-illu-release-badge" transform="translate(370, 70)">
+    <rect x="0" y="0" width="160" height="42" rx="21" fill="#10b981" filter="drop-shadow(0 6px 16px rgba(16, 185, 129, 0.3))" />
+    <circle cx="21" cy="21" r="12" fill="#ffffff" />
+    <path d="M 15 21 L 19 25 L 27 17" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" />
+    <text x="42" y="20" font-size="11" font-weight="800" fill="#ffffff">SHIPPED TO PROD</text>
+    <text x="42" y="32" font-size="9" font-weight="600" fill="#d1fae5">HOR-214 MERGED</text>
+  </g>
+
+  <!-- Twinkles -->
+  <g fill="#fbbf24">
+    <polygon points="170,120 173,126 179,128 174,132 176,138 170,135 164,138 166,132 161,128 167,126" />
+    <polygon points="760,110 763,116 769,118 764,122 766,128 760,125 754,128 756,122 751,118 757,116" />
+    <polygon points="710,180 712,185 717,186 713,190 714,195 710,192 706,195 707,190 703,186 708,185" />
+    <circle cx="240" cy="180" r="3" fill="#8b5cf6" />
+    <circle cx="680" cy="70" r="3" fill="#a78bfa" />
+  </g>
+</svg>

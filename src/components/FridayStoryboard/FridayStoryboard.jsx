@@ -1,772 +1,564 @@
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  Play, 
-  Pause, 
-  ChevronLeft, 
-  ChevronRight, 
-  CheckCircle2, 
-  AlertCircle, 
-  ArrowRight, 
-  ShieldAlert, 
-  GitMerge, 
-  Sparkles, 
-  Check, 
-  FileCode, 
-  Sliders, 
-  Workflow, 
-  Inbox, 
-  Users, 
-  Scale, 
-  LayoutDashboard, 
-  Lock, 
-  ArrowUpRight, 
-  GitBranch, 
-  ShieldCheck, 
-  CheckCircle,
-  Activity
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  FileText, GitBranch, Calculator, ShieldCheck, LayoutDashboard, Scale, Rocket,
+  Play, Pause, ChevronLeft, ChevronRight, ArrowUpRight, Sparkles, Lock, Check, ShieldAlert,
 } from 'lucide-react';
-import { FRIDAY_SCENES } from './fridayScenes';
-import { useFridayTimeline } from './useFridayTimeline';
+import { FRIDAY_TECHNICAL_SCENES } from './fridayScenes';
 import './FridayStoryboard.scss';
+import './FridayStoryboardScenes.scss';
 
-// Map scene iconKey to Lucide Icon component
-const SCENE_ICONS = {
-  Inbox,
-  Users,
-  Sliders,
-  ShieldAlert,
-  LayoutDashboard,
-  Scale,
-  GitMerge
+const ICONS = { FileText, GitBranch, Calculator, ShieldCheck, LayoutDashboard, Scale, Rocket };
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const ease = (t) => t * t * (3 - 2 * t);
+
+/* ---------- Illustration atoms ---------- */
+
+const HAIR = {
+  priya: 'M12 20c-1-8 4-13 10-13s11 5 10 13v8c-2-3-3-6-3-9-3-1-5-3-7-5-2 3-4 4-7 5 0 3-1 6-3 9z',
+  arjun: 'M14 17c1-6 5-9 8-9s7 3 8 9c-3-3-5-3-8-3s-5 0-8 3z',
+  meera: 'M13 18c0-7 5-11 9-11s9 4 9 11c-2-4-5-5-9-5s-7 1-9 5z',
 };
 
-export default function FridayStoryboard({
-  scenes,
-  heading = "Meet Friday, the PM that explains itself.",
-  subtitle = "Friday reads each ticket, checks who has room, and recommends an owner with the reasons shown. Anything uncertain waits for you.",
-  badge = "Deterministic PM Engine",
-  showArticleLink = true
-}) {
-  const containerRef = useRef(null);
-  const activeScenes = scenes && scenes.length > 0 ? scenes : FRIDAY_SCENES;
-
-  const {
-    sceneIndex,
-    currentScene,
-    sceneProgress,
-    isPlaying,
-    isReducedMotion,
-    togglePlay,
-    goTo,
-    nextScene,
-    prevScene,
-    onStageMouseEnter,
-    onStageMouseLeave
-  } = useFridayTimeline(containerRef, activeScenes);
-
+function Avatar({ who, bg, size = 44 }) {
   return (
-    <section 
-      ref={containerRef} 
-      className="friday-storyboard" 
-      id="friday-storyboard"
-      aria-label="Interactive Friday Storyboard"
-    >
-      <div className="friday-storyboard__container">
-        
-        {/* Section Header */}
-        <div className="friday-storyboard__header">
-          <div className="friday-storyboard__eyebrow">
-            <Sparkles size={14} />
-            <span>{badge}</span>
-          </div>
-          <h2 className="friday-storyboard__title">
-            {heading}
-          </h2>
-          <p className="friday-storyboard__subtitle">
-            {subtitle}
-          </p>
-          {showArticleLink && (
-            <div>
-              <Link to="/friday" className="friday-storyboard__full-article-link">
-                <span>Read Full Friday Architecture & Specification</span>
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-          )}
-        </div>
-
-        {/* Main Interactive Layout: Left = Captions & Controls, Right = Stage */}
-        <div className="friday-storyboard__layout">
-          
-          {/* Left: Step navigation with rich icons & active caption */}
-          <aside className="friday-storyboard__sidebar" aria-label="Storyboard timeline">
-            <ul className="friday-storyboard__steps-list" role="tablist">
-              {activeScenes.map((scene, idx) => {
-                const isActive = sceneIndex === idx;
-                const IconComponent = SCENE_ICONS[scene.iconKey] || Sparkles;
-
-                return (
-                  <li key={scene.id} className="friday-storyboard__step-item" role="presentation">
-                    <button
-                      type="button"
-                      role="tab"
-                      id={`scene-tab-${idx}`}
-                      aria-selected={isActive}
-                      aria-controls={`scene-panel-${idx}`}
-                      className={`friday-storyboard__step-button ${isActive ? 'friday-storyboard__step-button--active' : ''}`}
-                      onClick={() => goTo(idx)}
-                    >
-                      <div className="friday-storyboard__step-icon-box">
-                        <IconComponent size={18} />
-                      </div>
-                      <div className="friday-storyboard__step-content">
-                        <span className="friday-storyboard__step-title">{scene.shortTitle}</span>
-                        <span className="friday-storyboard__step-snippet">{scene.title}</span>
-                      </div>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-
-            {/* Polite Aria-Live Caption Box for active step */}
-            <div 
-              className="friday-storyboard__active-caption" 
-              aria-live="polite" 
-              id={`scene-panel-${sceneIndex}`}
-              role="tabpanel"
-              aria-labelledby={`scene-tab-${sceneIndex}`}
-            >
-              <h3 className="friday-storyboard__active-heading">
-                {currentScene.title}
-              </h3>
-              <p className="friday-storyboard__active-desc">
-                {currentScene.description}
-              </p>
-              {showArticleLink && (
-                <Link to="/friday" className="friday-storyboard__active-doc-link">
-                  <span>View full algorithm specification</span>
-                  <ArrowUpRight size={13} />
-                </Link>
-              )}
-            </div>
-
-            {/* Playback Toolbar */}
-            <div className="friday-storyboard__controls">
-              <div className="friday-storyboard__control-buttons">
-                <button
-                  type="button"
-                  className="friday-storyboard__ctrl-btn"
-                  onClick={prevScene}
-                  aria-label="Previous scene"
-                >
-                  <ChevronLeft size={18} />
-                </button>
-                <button
-                  type="button"
-                  className="friday-storyboard__ctrl-btn friday-storyboard__ctrl-btn--play"
-                  onClick={togglePlay}
-                  aria-label={isPlaying ? 'Pause storyboard autoplay' : 'Play storyboard autoplay'}
-                >
-                  {isPlaying ? <Pause size={18} /> : <Play size={18} />}
-                </button>
-                <button
-                  type="button"
-                  className="friday-storyboard__ctrl-btn"
-                  onClick={nextScene}
-                  aria-label="Next scene"
-                >
-                  <ChevronRight size={18} />
-                </button>
-              </div>
-
-              <div className="friday-storyboard__timing-indicator">
-                Scene {sceneIndex + 1} of {activeScenes.length}
-              </div>
-            </div>
-          </aside>
-
-          {/* Right: Animated Stage inside Browser Frame */}
-          <div className="friday-storyboard__stage-wrapper">
-            <div 
-              className="friday-storyboard__browser-frame"
-              onMouseEnter={onStageMouseEnter}
-              onMouseLeave={onStageMouseLeave}
-            >
-              {/* Browser Header Bar */}
-              <div className="friday-storyboard__browser-header">
-                <div className="friday-storyboard__window-dots">
-                  <div className="friday-storyboard__window-dot friday-storyboard__window-dot--red" />
-                  <div className="friday-storyboard__window-dot friday-storyboard__window-dot--yellow" />
-                  <div className="friday-storyboard__window-dot friday-storyboard__window-dot--green" />
-                </div>
-                <div className="friday-storyboard__browser-address">
-                  <span>hora.team/app/sprint/friday-evaluation</span>
-                </div>
-                <div className="friday-storyboard__live-tag">
-                  <span className="friday-storyboard__live-pulse" />
-                  <span>{isPlaying ? 'Evaluating live' : 'Paused'}</span>
-                </div>
-              </div>
-
-              {/* Progress Line */}
-              <div 
-                className="friday-storyboard__progress-line"
-                style={{ width: `${Math.round(sceneProgress * 100)}%` }}
-              />
-
-              {/* Stage Canvas */}
-              <div className="friday-storyboard__stage-canvas">
-                {renderDynamicScene(currentScene, sceneProgress, isReducedMotion)}
-              </div>
-            </div>
-
-            {/* Stage Footnote */}
-            <div className="friday-storyboard__stage-footnote">
-              <span className="friday-storyboard__sample-label">
-                Sample data · Rule-based evaluation with AI summaries
-              </span>
-              <span className="friday-storyboard__hover-hint">
-                Hover pauses playback
-              </span>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
+    <svg viewBox="0 0 44 44" width={size} height={size} aria-hidden="true" className="fsb-avatar">
+      <rect width="44" height="44" rx="12" fill={bg} />
+      <path d="M6 44c1-9 8-13 16-13s15 4 16 13z" fill="#fff" opacity=".92" />
+      <circle cx="22" cy="19" r="8" fill="#fde4cf" />
+      <path d={HAIR[who]} fill="#2b2540" />
+    </svg>
   );
 }
 
-/**
- * Render dynamic scene visuals according to the scene's payload structure.
- */
-function renderDynamicScene(scene, progress, isReducedMotion) {
-  const p = isReducedMotion ? 1 : progress;
+function Orb({ size = 88 }) {
+  return (
+    <div className="fsb-orb" style={{ width: size, height: size }} aria-hidden="true">
+      <span className="fsb-orb__ring" />
+      <span className="fsb-orb__ring fsb-orb__ring--2" />
+      <svg viewBox="0 0 96 96">
+        <defs>
+          <radialGradient id="fsbOrbGrad" cx="35%" cy="30%" r="75%">
+            <stop offset="0%" stopColor="#e9d5ff" />
+            <stop offset=".55" stopColor="#8b5cf6" />
+            <stop offset="1" stopColor="#5b21b6" />
+          </radialGradient>
+        </defs>
+        <circle cx="48" cy="48" r="30" fill="url(#fsbOrbGrad)" />
+        <path d="M48 31l3.2 9.8 9.8 3.2-9.8 3.2L48 57l-3.2-9.8-9.8-3.2 9.8-3.2z" fill="#fff" opacity=".92" />
+      </svg>
+    </div>
+  );
+}
 
-  // 1. TICKET INTAKE / CLASSIFICATION (has ticket, but not candidates)
-  if (scene.ticket && !scene.candidates) {
-    const cardOpacity = Math.min(p * 2, 1);
-    const badgesPop = p >= 0.35 || isReducedMotion;
-    const confPop = p >= 0.65 || isReducedMotion;
-    const confPercent = Math.round((scene.ticket.confidence || 0.82) * 100);
+function Ring({ value, label, size = 92 }) {
+  const r = 38;
+  const c = 2 * Math.PI * r;
+  return (
+    <div className="fsb-ring" style={{ width: size, height: size }}>
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r={r} fill="none" stroke="#ede9fe" strokeWidth="9" />
+        <circle
+          className="fsb-ring__arc"
+          cx="50" cy="50" r={r} fill="none" stroke="#7c3aed" strokeWidth="9" strokeLinecap="round"
+          strokeDasharray={c} strokeDashoffset={c * (1 - value)} transform="rotate(-90 50 50)"
+          style={{ '--from': c }}
+        />
+      </svg>
+      <div className="fsb-ring__label"><strong>{Math.round(value * 100)}%</strong><span>{label}</span></div>
+    </div>
+  );
+}
 
-    return (
-      <div className="friday-storyboard__s1-wrapper" style={{ opacity: cardOpacity }}>
-        <div className="friday-storyboard__s1-ticket-card">
-          <div className="friday-storyboard__s1-scan-beam" />
-          
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-              <span style={{ fontSize: '12px', fontWeight: 800, color: '#3b82f6', background: '#eff6ff', padding: '4px 10px', borderRadius: '6px', border: '1px solid #bfdbfe' }}>
-                {scene.ticket.key}
-              </span>
-              <span style={{ fontSize: '11px', fontWeight: 700, color: '#b45309', background: '#fef3c7', padding: '4px 8px', borderRadius: '6px' }}>
-                {scene.ticket.priority || 'P1 · High'}
-              </span>
-            </div>
-            <span style={{ fontSize: '12px', fontWeight: 600, color: '#64748b' }}>
-              {scene.ticket.points} story pts
-            </span>
-          </div>
+const delay = (s) => ({ '--d': `${s}s` });
 
-          <h4 style={{ fontSize: '18px', fontWeight: 800, color: '#0f172a', margin: '0 0 12px 0' }}>
-            {scene.ticket.title}
-          </h4>
+/* ---------- Scenes ---------- */
 
-          <p style={{ fontSize: '13px', color: '#64748b', lineHeight: 1.5, margin: '0 0 18px 0' }}>
-            Automatic extraction from GitHub repository webhook payload. Matches language manifests and author blame.
-          </p>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-            {scene.ticket.badges.map((badge, bIdx) => (
-              <span 
-                key={badge} 
-                style={{
-                  fontSize: '11px',
-                  fontWeight: 700,
-                  padding: '4px 10px',
-                  borderRadius: '6px',
-                  background: badgesPop ? '#ede9fe' : '#f1f5f9',
-                  color: badgesPop ? '#6d28d9' : '#64748b',
-                  border: `1px solid ${badgesPop ? '#ddd6fe' : '#e2e8f0'}`,
-                  transition: 'all 0.3s ease',
-                  transitionDelay: `${bIdx * 60}ms`
-                }}
-              >
-                {badge}
-              </span>
-            ))}
-          </div>
+function SceneTicket() {
+  return (
+    <div className="fsb-s1">
+      <div className="fsb-ticket fsb-in-left">
+        <span className="fsb-beam" />
+        <div className="fsb-ticket__top"><span className="fsb-id">HOR-214</span><span className="fsb-pts">3 pts</span></div>
+        <h4>Add retry to webhook sender</h4>
+        <p>Failed deliveries should retry with backoff and log every attempt.</p>
+        <div className="fsb-lines"><i /><i /><i /></div>
+      </div>
+      <div className="fsb-s1__right">
+        <div className="fsb-pop" style={delay(0.4)}><Orb /></div>
+        <div className="fsb-badges">
+          {['Backend', 'Node.js', 'Webhooks'].map((b, i) => (
+            <span key={b} className="fsb-badge fsb-pop" style={delay(1.2 + i * 0.45)}>{b}</span>
+          ))}
         </div>
+        <div className="fsb-pop" style={delay(2.6)}><Ring value={0.82} label="Confidence" /></div>
+      </div>
+    </div>
+  );
+}
 
-        <div className="friday-storyboard__s1-inspector">
-          <div className="friday-storyboard__s1-gauge-card">
-            <div style={{ width: '64px', height: '64px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <svg viewBox="0 0 36 36" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
-                <path
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="#e2e8f0"
-                  strokeWidth="3.5"
-                />
-                <path
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="#10b981"
-                  strokeWidth="3.5"
-                  strokeDasharray={`${confPop ? confPercent : 20}, 100`}
-                  style={{ transition: 'stroke-dasharray 0.8s ease' }}
-                />
-              </svg>
-              <div style={{ position: 'absolute', fontSize: '12px', fontWeight: 800, color: '#047857' }}>
-                {confPercent}%
-              </div>
-            </div>
-            <div>
-              <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a' }}>
-                Classification Certainty
-              </div>
-              <div style={{ fontSize: '12px', color: '#059669', fontWeight: 600 }}>
-                {scene.ticket.confidenceLabel || `High confidence (${scene.ticket.confidence})`}
-              </div>
-              <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>
-                Verified stack matches active sprint schema
-              </div>
-            </div>
-          </div>
+const DEVS = [
+  { id: 'priya', name: 'Priya', bg: '#8b5cf6', skills: ['Node.js', 'Webhooks'], evidence: '6 merged PRs in webhooks/. Built HOR-171, a similar ticket.', load: 0.6, label: '3 of 5 tickets', tone: 'ok' },
+  { id: 'arjun', name: 'Arjun', bg: '#f43f5e', skills: ['React', 'Node.js'], evidence: 'Mostly frontend work this quarter.', load: 1, label: '5 of 5 tickets', tone: 'full' },
+  { id: 'meera', name: 'Meera', bg: '#3b82f6', skills: ['Node.js', 'Redis'], evidence: '2 PRs in queue/ last month.', load: 0.4, label: '2 of 5 tickets', tone: 'ok' },
+];
 
-          <div style={{ background: '#f5f3ff', border: '1px solid #ddd6fe', borderRadius: '12px', padding: '14px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#8b5cf6', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Workflow size={20} />
-            </div>
-            <div style={{ fontSize: '12px', color: '#581c87', lineHeight: 1.4 }}>
-              <strong>Friday Parser:</strong> Extracted stack tags from repository manifests and mapped to candidate capability matrices.
-            </div>
-          </div>
+function SceneContext() {
+  return (
+    <div className="fsb-s2">
+      <div className="fsb-repo">
+        <span className="fsb-repo__name"><GitBranch size={14} /> Repo scan</span>
+        <div className="fsb-chips">
+          {['package.json', 'Node.js', 'Redis', 'Docker'].map((c, i) => (
+            <span key={c} className={`fsb-chip fsb-pop ${i === 0 ? 'fsb-chip--file' : ''}`} style={delay(0.3 + i * 0.4)}>{c}</span>
+          ))}
         </div>
       </div>
-    );
-  }
-
-  // 2. CONTEXT CHECK & DEVELOPER PROFILES (has candidates)
-  if (scene.candidates) {
-    return (
-      <div className="friday-storyboard__s2-wrapper">
-        <div className="friday-storyboard__s2-repo-bar">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <FileCode size={18} color="#8b5cf6" />
-            <span style={{ fontSize: '13px', fontWeight: 700, color: '#1e293b' }}>
-              Repo Manifests Synced from main:
-            </span>
+      <div className="fsb-devs">
+        {DEVS.map((d, i) => (
+          <div key={d.id} className={`fsb-dev fsb-dev--${d.id} fsb-rise`} style={delay(1.2 + i * 0.35)}>
+            <div className="fsb-dev__head">
+              <Avatar who={d.id} bg={d.bg} />
+              <div><strong>{d.name}</strong><span>Backend engineer</span></div>
+            </div>
+            <div className="fsb-skills">{d.skills.map((s) => <span key={s}>{s}</span>)}</div>
+            <p className="fsb-evidence">{d.evidence}</p>
+            <div className="fsb-meter">
+              <div className="fsb-meter__row"><span>{d.label}</span>{d.tone === 'full' && <span className="fsb-tag fsb-tag--red"><ShieldAlert size={11} /> At capacity</span>}</div>
+              <div className="fsb-track"><i className={`fsb-fill fsb-fill--${d.tone}`} style={{ width: `${d.load * 100}%`, ...delay(2 + i * 0.35) }} /></div>
+            </div>
           </div>
-          <div className="friday-storyboard__s2-manifest-tags">
-            {scene.repoManifests?.map((m) => (
-              <span key={m.name} className="friday-storyboard__s2-manifest-tag">
-                <span style={{ color: '#8b5cf6', fontWeight: 800 }}>•</span>
-                <span>{m.name}</span>
-                <span style={{ color: '#64748b', fontSize: '10px' }}>({m.tag})</span>
-              </span>
-            ))}
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const FACTORS = [
+  { k: 'Skill match', w: 35, s: 100 },
+  { k: 'Project experience', w: 20, s: 90 },
+  { k: 'Similar work', w: 15, s: 80 },
+  { k: 'Sprint capacity', w: 15, s: 60 },
+  { k: 'Availability', w: 10, s: 80 },
+  { k: 'Dependencies', w: 5, s: 100 },
+];
+
+function SceneScoring({ p }) {
+  const rows = FACTORS.map((f, i) => {
+    const r = ease(clamp((p * 1.3 - i * 0.13) / 0.18));
+    return { ...f, r, pts: ((f.w * f.s) / 100) * r };
+  });
+  const total = rows.reduce((a, r) => a + r.pts, 0);
+  const c = 2 * Math.PI * 38;
+  return (
+    <div className="fsb-s3">
+      <div className="fsb-score">
+        <div className="fsb-score__head">
+          <Avatar who="priya" bg="#8b5cf6" size={48} />
+          <div><strong>Priya</strong><span>Candidate for HOR-214</span></div>
+          <div className="fsb-score__ring">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#ede9fe" strokeWidth="9" />
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#7c3aed" strokeWidth="9" strokeLinecap="round"
+                strokeDasharray={c} strokeDashoffset={c * (1 - total / 100)} transform="rotate(-90 50 50)" />
+            </svg>
+            <b>{Math.round(total)}</b>
           </div>
         </div>
+        <ul className="fsb-factors">
+          {rows.map((r) => (
+            <li key={r.k}>
+              <div className="fsb-factors__row"><span>{r.k} <em>{r.w}%</em></span><b>+{r.pts.toFixed(1)}</b></div>
+              <div className="fsb-track"><i className="fsb-fill fsb-fill--ok fsb-fill--live" style={{ width: `${r.s * r.r}%` }} /></div>
+            </li>
+          ))}
+        </ul>
+        <div className={`fsb-outcome ${total >= 85 ? 'is-on' : ''}`}><Check size={14} /> Score 85+ with confidence 75%+ qualifies for auto-assign</div>
+      </div>
+      <div className="fsb-others">
+        <h5>Everyone else</h5>
+        <div className="fsb-other"><Avatar who="meera" bg="#3b82f6" size={34} /><span>Meera</span><b>68</b><small>Suggest only</small></div>
+        <div className="fsb-other fsb-other--off"><Avatar who="arjun" bg="#f43f5e" size={34} /><span>Arjun</span><b>&mdash;</b><small>Not eligible, at capacity</small></div>
+        <p className="fsb-note">The capacity check runs before skill score, so a perfect match cannot override it.</p>
+      </div>
+    </div>
+  );
+}
 
-        <div className="friday-storyboard__s2-cards-grid">
-          {scene.candidates.map((cand) => {
-            const isAvailable = cand.statusType === 'available';
+const LANES = [
+  { k: 'auto', t: 'Auto-assign', r: 'Score 85+, confidence 75%+' },
+  { k: 'rec', t: 'Recommend', r: 'Score 70+, confidence 60%+' },
+  { k: 'sug', t: 'Suggest only', r: 'Score 55 to 69' },
+  { k: 'rev', t: 'Review required', r: 'Blocked or vague' },
+  { k: 'dna', t: 'Do not assign', r: 'Full or no match' },
+];
 
-            return (
-              <div 
-                key={cand.name} 
-                className={`friday-storyboard__s2-dev-card ${isAvailable ? 'friday-storyboard__s2-dev-card--priya' : 'friday-storyboard__s2-dev-card--arjun'}`}
-              >
-                <div className="friday-storyboard__s2-dev-header">
-                  <div className="friday-storyboard__s2-avatar" style={{ background: cand.avatarGradient || '#8b5cf6' }}>
-                    {cand.avatar}
-                    <span className={`friday-storyboard__s2-avatar-status friday-storyboard__s2-avatar-status--${isAvailable ? 'online' : 'busy'}`} />
-                  </div>
-                  <div className="friday-storyboard__s2-dev-meta">
-                    <div className="friday-storyboard__s2-dev-name">{cand.name}</div>
-                    <div className="friday-storyboard__s2-dev-role">{cand.role}</div>
-                  </div>
-                </div>
+function SceneGate() {
+  return (
+    <div className="fsb-s4">
+      <div className="fsb-gate-line"><span className="fsb-sweep" /> Policy gate</div>
+      <div className="fsb-lanes">
+        {LANES.map((l) => (
+          <div key={l.k} className={`fsb-lane fsb-lane--${l.k}`}>
+            <strong>{l.t}</strong><small>{l.r}</small>
+            {l.k === 'auto' && (
+              <div className="fsb-drop fsb-drop--ok" style={delay(0.9)}>
+                <span className="fsb-id">HOR-214</span><span>to Priya</span><Check size={13} />
+              </div>
+            )}
+            {l.k === 'rev' && (
+              <div className="fsb-drop fsb-drop--hold" style={delay(2.6)}>
+                <span className="fsb-id">HOR-230</span><span>Blocked by HOR-228</span><Lock size={13} />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-                <div className="friday-storyboard__s2-skills-list">
-                  {cand.skills?.map((s) => (
-                    <span key={s} className="friday-storyboard__s2-skill-pill">
-                      {s}
-                    </span>
-                  ))}
-                </div>
+function SceneBoard({ p }) {
+  const moved = p > 0.55;
+  const pressed = p > 0.45 && !moved;
+  return (
+    <div className="fsb-s5">
+      <div className="fsb-col">
+        <h5>Backlog</h5>
+        {!moved && (
+          <div className="fsb-fcard fsb-pop" style={delay(0.2)}>
+            <div className="fsb-fcard__head"><Orb size={34} /><strong>Friday suggests Priya</strong></div>
+            <div className="fsb-id">HOR-214 &middot; Add retry to webhook sender</div>
+            <ul>
+              <li>Strongest Node.js evidence in webhooks/</li>
+              <li>Built similar ticket HOR-171</li>
+              <li>2 of 5 slots open, no blockers</li>
+            </ul>
+            <div className="fsb-fcard__btns">
+              <span className={`fsb-btn fsb-btn--p ${pressed ? 'is-pressed' : ''}`}>Assign to Priya</span>
+              <span className="fsb-btn">Not now</span>
+            </div>
+          </div>
+        )}
+        <div className="fsb-mini"><span className="fsb-id">HOR-221</span> Fix timezone in sprint report</div>
+      </div>
+      <div className="fsb-col">
+        <h5>In progress</h5>
+        <div className="fsb-mini"><span className="fsb-id">HOR-209</span> Calendar drag to resize <em className="fsb-who fsb-who--r">Arjun</em></div>
+        {moved && (
+          <div className="fsb-mini fsb-mini--new fsb-pop">
+            <span className="fsb-id">HOR-214</span> Add retry to webhook sender <em className="fsb-who fsb-who--p">Priya</em>
+          </div>
+        )}
+        {moved && <div className="fsb-toast fsb-rise" style={delay(0.3)}><Check size={13} /> Priya now has 4 of 5 tickets</div>}
+      </div>
+    </div>
+  );
+}
 
-                <div className="friday-storyboard__s2-evidence-box">
-                  <GitBranch size={14} color="#8b5cf6" style={{ flexShrink: 0, marginTop: '2px' }} />
-                  <span>{cand.evidence}</span>
-                </div>
+function SceneRebalance({ p }) {
+  const cubes = [0, 1, 2].map((k) => clamp((p - 0.15 - k * 0.17) / 0.2));
+  const done = cubes.filter((t) => t >= 1).length;
+  const aPts = 24 - 2 * done;
+  const mPts = 6 + 2 * done;
+  const aPct = (aPts / 20) * 100;
+  const mPct = (mPts / 20) * 100;
+  const th = clamp((aPct - mPct) * 0.2, -25, 25) * -1;
+  const rad = (th * Math.PI) / 180;
+  const cx = 200, cy = 62, L = 120;
+  const lx = cx - L * Math.cos(rad), ly = cy - L * Math.sin(rad);
+  const rx = cx + L * Math.cos(rad), ry = cy + L * Math.sin(rad);
+  return (
+    <div className="fsb-s6">
+      <svg viewBox="0 0 400 190" className="fsb-scale" aria-hidden="true">
+        <path d="M200 62 L182 170 H218 Z" fill="#ede9fe" stroke="#c4b5fd" strokeWidth="2" strokeLinejoin="round" />
+        <line x1={lx} y1={ly} x2={rx} y2={ry} stroke="#7c3aed" strokeWidth="5" strokeLinecap="round" />
+        <circle cx={cx} cy={cy} r="7" fill="#7c3aed" />
+        {[[lx, ly, 'Arjun', '#f43f5e'], [rx, ry, 'Meera', '#3b82f6']].map(([x, y, n, col]) => (
+          <g key={n}>
+            <path d={`M${x} ${y} L${x - 34} ${y + 52} M${x} ${y} L${x + 34} ${y + 52}`} stroke="#94a3b8" strokeWidth="1.5" />
+            <ellipse cx={x} cy={y + 56} rx="42" ry="8" fill={col} opacity=".9" />
+            <text x={x} y={y + 80} textAnchor="middle" fontSize="13" fontWeight="700" fill="#334155">{n}</text>
+          </g>
+        ))}
+        {cubes.map((t, k) => t > 0 && t < 1 && (
+          <rect key={k} x={lerp(lx, rx, t) - 8} y={lerp(ly, ry, t) + 38 - Math.sin(Math.PI * t) * 46} width="16" height="16" rx="4" fill="#8b5cf6" />
+        ))}
+      </svg>
+      <div className="fsb-load-grid">
+        {[{ n: 'Arjun', who: 'arjun', bg: '#f43f5e', pts: aPts, pct: aPct }, { n: 'Meera', who: 'meera', bg: '#3b82f6', pts: mPts, pct: mPct }].map((d) => (
+          <div key={d.n} className="fsb-load">
+            <Avatar who={d.who} bg={d.bg} size={38} />
+            <div className="fsb-load__body">
+              <div className="fsb-meter__row"><strong>{d.n}</strong><span className={d.pct > 100 ? 'fsb-over' : ''}>{d.pts} of 20 pts &middot; {Math.round(d.pct)}%</span></div>
+              <div className="fsb-track"><i className={`fsb-fill fsb-fill--live ${d.pct > 100 ? 'fsb-fill--full' : 'fsb-fill--ok'}`} style={{ width: `${clamp(d.pct, 0, 100)}%` }} /></div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="fsb-note">{done < 3 ? 'Scope grew mid-sprint. Friday moves untouched tickets to a teammate with room.' : 'Both under their limit. Nobody pushed past 100%.'}</p>
+    </div>
+  );
+}
 
-                <div className="friday-storyboard__s2-capacity-meter">
-                  <div className="friday-storyboard__s2-cap-row">
-                    <span style={{ color: '#64748b' }}>Sprint Load</span>
-                    <span style={{ fontWeight: 700, color: isAvailable ? '#1e293b' : '#dc2626' }}>
-                      {cand.load}
-                    </span>
-                  </div>
+function SceneShip({ p }) {
+  const draw = clamp(p / 0.25);
+  const merged = p > 0.2;
+  const checks = ['Tests passed', 'Lint clean', 'Build succeeded'];
+  const lines = ['Shipped: webhook retry (HOR-214)', 'Blocked: HOR-230 waits on HOR-228', 'Watch: Arjun is at his sprint limit'];
+  return (
+    <div className="fsb-s7">
+      <div className="fsb-card">
+        <h5>Git</h5>
+        <svg viewBox="0 0 160 190" aria-hidden="true">
+          <line x1="40" y1="20" x2="40" y2="170" stroke="#cbd5e1" strokeWidth="3" strokeDasharray="5 5" />
+          <path pathLength="1" d="M40 38 C 110 38, 110 120, 40 128" fill="none" stroke="#8b5cf6" strokeWidth="3" strokeDasharray="1" strokeDashoffset={1 - draw} />
+          {[[40, 28, '#3b82f6'], [40, 80, '#3b82f6'], [40, 170, '#ef4444']].map(([x, y, c], i) => <circle key={i} cx={x} cy={y} r="8" fill="#fff" stroke={c} strokeWidth="4" />)}
+          <circle cx="40" cy="128" r="9" fill={merged ? '#8b5cf6' : '#fff'} stroke="#8b5cf6" strokeWidth="4" className={merged ? 'fsb-node-on' : ''} />
+          <text x="58" y="132" fontSize="11" fontWeight="700" fill="#7c3aed">{merged ? 'PR merged' : 'PR open'}</text>
+        </svg>
+      </div>
+      <div className="fsb-card">
+        <h5>Pull request #142</h5>
+        <div className={`fsb-moved ${p > 0.35 ? 'is-done' : ''}`}><span className="fsb-id">HOR-214</span> {p > 0.35 ? 'Moved to Done' : 'In review'}</div>
+        <ul className="fsb-checks">
+          {checks.map((c, i) => (
+            <li key={c} className={p > 0.45 + i * 0.1 ? 'is-on' : ''}><span><Check size={11} /></span>{c}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="fsb-card fsb-card--bubble">
+        <h5><Sparkles size={13} /> Friday update</h5>
+        {lines.map((l, i) => <p key={l} className={p > 0.7 + i * 0.1 ? 'is-on' : ''}>{l}</p>)}
+      </div>
+    </div>
+  );
+}
 
-                  <div className="friday-storyboard__s2-battery-track">
-                    <div 
-                      className="friday-storyboard__s2-battery-fill"
-                      style={{
-                        width: `${cand.capacityPercent}%`,
-                        backgroundColor: isAvailable ? '#10b981' : '#ef4444'
-                      }}
-                    />
-                  </div>
+/* ---------- Timeline ---------- */
 
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px' }}>
-                    {isAvailable ? (
-                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#059669', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <CheckCircle size={12} /> {cand.status}
-                      </span>
-                    ) : (
-                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#dc2626', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <ShieldAlert size={12} /> {cand.status}
-                      </span>
+function useTimeline(scenes, playing) {
+  const [pos, setPos] = useState({ i: 0, p: 0 });
+  const raf = useRef(0);
+  useEffect(() => {
+    if (!playing) return undefined;
+    let last = 0;
+    const tick = (t) => {
+      if (!last) last = t;
+      const dt = Math.min(t - last, 64);
+      last = t;
+      setPos(({ i, p }) => {
+        const currentDuration = scenes[i]?.duration || 5000;
+        const np = p + dt / currentDuration;
+        return np < 1 ? { i, p: np } : { i: (i + 1) % scenes.length, p: 0 };
+      });
+      raf.current = requestAnimationFrame(tick);
+    };
+    raf.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf.current);
+  }, [playing, scenes]);
+  return [pos, setPos];
+}
+
+/* ---------- Component ---------- */
+
+export default function FridayStoryboard({
+  scenes = FRIDAY_TECHNICAL_SCENES,
+  heading = 'See Friday work, step by step',
+  subtitle = 'Follow one ticket from creation to a merged pull request.',
+  badge = 'Interactive demo',
+  showArticleLink = false,
+  articleHref = '#',
+}) {
+  const rootRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const [userPaused, setUserPaused] = useState(false);
+  const [hover, setHover] = useState(false);
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => setReduced(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el || !('IntersectionObserver' in window)) { setVisible(true); return undefined; }
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting && e.intersectionRatio > 0.35), { threshold: [0, 0.35, 0.6] });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const playing = visible && !userPaused && !hover && !reduced;
+  const [{ i, p }, setPos] = useTimeline(scenes, playing);
+  const scene = scenes[i] || scenes[0];
+  const Icon = ICONS[scene.icon] || FileText;
+  const total = scenes.reduce((a, s) => a + (s.duration || 5000), 0);
+  const elapsed = scenes.slice(0, i).reduce((a, s) => a + (s.duration || 5000), 0) + p * (scene.duration || 5000);
+
+  const goTo = useCallback((n) => { setPos({ i: (n + scenes.length) % scenes.length, p: reduced ? 1 : 0 }); setUserPaused(true); }, [scenes.length, reduced, setPos]);
+
+  const sceneMap = {
+    ticket: <SceneTicket key="t" />,
+    context: <SceneContext key="c" />,
+    scoring: <SceneScoring key="s" p={p} />,
+    gate: <SceneGate key="g" />,
+    board: <SceneBoard key="b" p={reduced ? 1 : p} />,
+    rebalance: <SceneRebalance key="r" p={reduced ? 1 : p} />,
+    ship: <SceneShip key="h" p={reduced ? 1 : p} />
+  };
+
+  const SceneView = sceneMap[scene.id] || [<SceneTicket key="t" />, <SceneContext key="c" />, <SceneScoring key="s" p={p} />, <SceneGate key="g" />, <SceneBoard key="b" p={reduced ? 1 : p} />, <SceneRebalance key="r" p={reduced ? 1 : p} />, <SceneShip key="h" p={reduced ? 1 : p} />][i];
+
+  return (
+    <section className="friday-storyboard" ref={rootRef} aria-label="Friday interactive demo">
+      <div className="friday-storyboard__container">
+        <header className="friday-storyboard__header">
+          <div className="friday-storyboard__eyebrow"><Sparkles size={14} /><span>{badge}</span></div>
+          <h2 className="friday-storyboard__title">{heading}</h2>
+          <p className="friday-storyboard__subtitle">{subtitle}</p>
+          {showArticleLink && <a className="friday-storyboard__full-article-link" href={articleHref}>Read the full breakdown <ArrowUpRight size={15} /></a>}
+        </header>
+
+        {/* SINGLE UNIFIED BROWSER WINDOW (Light Mode) */}
+        <div 
+          className="friday-storyboard__unified-frame"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          {/* 1. Top Browser Header Chrome */}
+          <div className="friday-storyboard__browser-header">
+            <div className="friday-storyboard__window-dots">
+              <span className="friday-storyboard__window-dot friday-storyboard__window-dot--red" />
+              <span className="friday-storyboard__window-dot friday-storyboard__window-dot--yellow" />
+              <span className="friday-storyboard__window-dot friday-storyboard__window-dot--green" />
+            </div>
+
+            <div className="friday-storyboard__browser-address">
+              app.hora.team / sprint-24 / friday-evaluation
+            </div>
+
+            <div className="friday-storyboard__header-controls">
+              <div className="friday-storyboard__live-tag">
+                <span className={`friday-storyboard__live-pulse ${playing ? 'fsb-pulse' : ''}`} />
+                <span>{playing ? 'Evaluating' : 'Paused'}</span>
+              </div>
+
+              {/* Integrated Playback Controls */}
+              <div className="friday-storyboard__control-buttons">
+                <button 
+                  type="button" 
+                  className="friday-storyboard__ctrl-btn" 
+                  aria-label="Previous step" 
+                  onClick={() => goTo(i - 1)}
+                  title="Previous step"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                <button 
+                  type="button" 
+                  className={`friday-storyboard__ctrl-btn friday-storyboard__ctrl-btn--play ${playing ? 'is-playing' : ''}`} 
+                  aria-label={userPaused ? 'Play' : 'Pause'} 
+                  onClick={() => setUserPaused((v) => !v)}
+                  title={userPaused ? 'Play' : 'Pause'}
+                >
+                  {userPaused ? <Play size={14} /> : <Pause size={14} />}
+                </button>
+                <button 
+                  type="button" 
+                  className="friday-storyboard__ctrl-btn" 
+                  aria-label="Next step" 
+                  onClick={() => goTo(i + 1)}
+                  title="Next step"
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Overall Continuous Progress Line */}
+          <div className="friday-storyboard__progress-line" style={{ width: `${(elapsed / total) * 100}%` }} />
+
+          {/* 2. Unified Step Navigation Tabs (Horizontal Strip) */}
+          <div className="friday-storyboard__steps-bar" role="tablist" aria-label="Friday evaluation steps">
+            <div className="friday-storyboard__steps-track">
+              {scenes.map((s, n) => {
+                const isActive = n === i;
+                const isPast = n < i;
+                const StepIcon = ICONS[s.icon] || FileText;
+
+                return (
+                  <button
+                    key={s.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-label={`Step ${n + 1}: ${s.title}`}
+                    className={`friday-storyboard__step-tab ${isActive ? 'is-active' : ''} ${isPast ? 'is-past' : ''}`}
+                    onClick={() => goTo(n)}
+                  >
+                    <div className="friday-storyboard__step-tab-icon">
+                      <StepIcon size={14} />
+                    </div>
+                    <span className="friday-storyboard__step-tab-num">0{n + 1}</span>
+                    <span className="friday-storyboard__step-tab-title">{s.title}</span>
+                    {isActive && (
+                      <span 
+                        className="friday-storyboard__step-tab-progress"
+                        style={{ width: `${p * 100}%` }}
+                      />
                     )}
-                    <span style={{ fontSize: '10px', color: '#94a3b8' }}>
-                      {cand.capacityPercent}% full
-                    </span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  }
-
-  // 3. DETERMINISTIC SCORING BREAKDOWN (has scoringFactors)
-  if (scene.scoringFactors) {
-    const factors = scene.scoringFactors;
-
-    return (
-      <div className="friday-storyboard__s3-wrapper">
-        <div className="friday-storyboard__s3-top-banner">
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-              <span style={{ fontSize: '11px', fontWeight: 800, color: '#7c3aed', background: '#ffffff', padding: '3px 8px', borderRadius: '6px' }}>
-                {scene.candidate?.rank || 'Rank #1 Recommendation'}
-              </span>
-              <span style={{ fontSize: '13px', fontWeight: 800, color: '#1e293b' }}>
-                Candidate: {scene.candidate?.name || 'Priya'}
-              </span>
-            </div>
-            <div style={{ fontSize: '12px', color: '#6b21a8' }}>
-              Mathematical evaluation completed across 6 deterministic capability dimensions.
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          <div className="friday-storyboard__s3-score-wheel">
-            <div className="friday-storyboard__s3-score-num">{scene.candidate?.totalScore || 87}</div>
-            <div style={{ fontSize: '12px', color: '#7c3aed', fontWeight: 700, lineHeight: 1.2 }}>
-              / 100<br /><span style={{ fontSize: '10px', color: '#64748b' }}>TOTAL SCORE</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="friday-storyboard__s3-bars-grid">
-          {factors.map((factor, idx) => {
-            const barFillDelay = idx * 0.12;
-            const fillRatio = Math.max(0, Math.min((p - barFillDelay) * 2.5, 1));
-            const effectiveFill = isReducedMotion ? factor.raw : Math.round(factor.raw * fillRatio);
-
-            return (
-              <div key={factor.label} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
-                  <span style={{ fontWeight: 700, color: '#1e293b' }}>{factor.label}</span>
-                  <span style={{ fontFamily: 'monospace', fontSize: '11px', color: '#64748b', fontWeight: 600 }}>
-                    {factor.raw} × {factor.weight} = <strong style={{ color: factor.color }}>+{factor.weighted}</strong>
-                  </span>
-                </div>
-                <div style={{ width: '100%', height: '8px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
-                  <div 
-                    style={{ 
-                      width: `${effectiveFill}%`,
-                      height: '100%',
-                      backgroundColor: factor.color,
-                      borderRadius: '4px',
-                      transition: 'width 0.4s ease'
-                    }}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 16px', background: '#fff1f2', border: '1px solid #fecdd3', borderRadius: '10px', fontSize: '12px' }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#be123c', fontWeight: 800 }}>
-            <ShieldAlert size={15} /> {scene.disqualifiedCandidate?.name || 'Arjun'}: Excluded by Hard Constraint
-          </span>
-          <span style={{ color: '#9f1239', fontWeight: 500 }}>
-            {scene.disqualifiedCandidate?.reason || 'Zero-overload rule triggered: at capacity'}
-          </span>
-        </div>
-      </div>
-    );
-  }
-
-  // 4. POLICY GATES (has lanes)
-  if (scene.lanes) {
-    const lanes = scene.lanes;
-    const passGate = p >= 0.4 || isReducedMotion;
-    const blockedGate = p >= 0.65 || isReducedMotion;
-
-    return (
-      <div className="friday-storyboard__s4-wrapper">
-        <div className="friday-storyboard__s4-gates-row">
-          {lanes.map((lane) => {
-            const isAuto = lane.id === 'auto-assign';
-            const isReview = lane.id === 'review';
-
-            return (
-              <div 
-                key={lane.id} 
-                className={`friday-storyboard__s4-gate-col ${isAuto ? 'friday-storyboard__s4-gate-col--auto' : ''} ${isReview ? 'friday-storyboard__s4-gate-col--review' : ''}`}
-              >
-                <div style={{ borderBottom: '1px solid rgba(0,0,0,0.06)', paddingBottom: '6px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '12px', fontWeight: 800, color: lane.color }}>
-                    {lane.name}
-                  </div>
-                  <div style={{ fontSize: '9px', color: '#64748b' }}>
-                    {lane.criteria}
-                  </div>
-                </div>
-
-                {isAuto && passGate && (
-                  <div style={{ background: '#ffffff', border: '1.5px solid #86efac', borderRadius: '8px', padding: '8px', boxShadow: '0 4px 10px rgba(16,185,129,0.1)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <div style={{ fontSize: '11px', fontWeight: 800, color: '#166534', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <Check size={12} /> {lane.activeTicket || 'HOR-214'}
-                    </div>
-                    <div style={{ fontSize: '10px', color: '#15803d' }}>
-                      Score 87 · Conf 0.82
-                    </div>
-                    <div style={{ fontSize: '9px', background: '#dcfce7', color: '#14532d', padding: '2px 4px', borderRadius: '4px', textAlign: 'center', fontWeight: 700 }}>
-                      Auto-routed
-                    </div>
-                  </div>
-                )}
-
-                {isReview && blockedGate && (
-                  <div style={{ background: '#ffffff', border: '1.5px solid #fca5a5', borderRadius: '8px', padding: '8px', boxShadow: '0 4px 10px rgba(239,68,68,0.08)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <div style={{ fontSize: '11px', fontWeight: 800, color: '#b91c1c', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <Lock size={12} /> {lane.activeTicket || 'HOR-230'}
-                    </div>
-                    <div style={{ fontSize: '10px', color: '#991b1b', lineHeight: 1.3 }}>
-                      {scene.blockedTicket?.reason || 'Stopped at gate: Blocked by HOR-228'}
-                    </div>
-                    <div style={{ fontSize: '9px', background: '#fee2e2', color: '#7f1d1d', padding: '2px 4px', borderRadius: '4px', textAlign: 'center', fontWeight: 700 }}>
-                      Awaiting team review
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '12px 18px', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: '#334155' }}>
-          <ShieldCheck size={18} color="#10b981" />
-          <span>
-            <strong>Guardrail Policy Executed:</strong> Clear high-confidence tickets automatically dispatch forward, while tickets with upstream blockers pause for team human review.
-          </span>
-        </div>
-      </div>
-    );
-  }
-
-  // 5. KANBAN BOARD PLACEMENT (has card)
-  if (scene.card) {
-    const assigned = p >= 0.55 || isReducedMotion;
-
-    return (
-      <div className="friday-storyboard__s5-wrapper">
-        <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '14px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', minHeight: '260px' }}>
-          <div style={{ fontSize: '12px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Backlog (Triage Queue)
-          </div>
-
-          {!assigned ? (
-            <div style={{ background: '#ffffff', border: '1.5px solid #8b5cf6', borderRadius: '12px', padding: '14px', boxShadow: '0 8px 24px rgba(139,92,246,0.12)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '11px', fontWeight: 700, color: '#7c3aed', background: '#f5f3ff', padding: '3px 8px', borderRadius: '4px', alignSelf: 'flex-start' }}>
-                <Sparkles size={12} /> Friday Recommendation
-              </div>
-              <div style={{ fontSize: '14px', fontWeight: 800, color: '#0f172a' }}>
-                {scene.card.key} {scene.card.title}
-              </div>
-              <div style={{ fontSize: '11px', color: '#475569', background: '#f8fafc', padding: '6px 8px', borderRadius: '6px' }}>
-                <strong>Reason:</strong> {scene.card.rationale}
-              </div>
-              <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-                <button type="button" style={{ flex: 1, background: '#8b5cf6', color: '#ffffff', border: 'none', borderRadius: '6px', padding: '8px 12px', fontSize: '11px', fontWeight: 700, cursor: 'pointer' }}>
-                  Assign to {scene.card.recommendedTo} ✓
-                </button>
-                <button type="button" style={{ background: 'transparent', color: '#64748b', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 12px', fontSize: '11px', fontWeight: 600, cursor: 'pointer' }}>
-                  Not now
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div style={{ fontSize: '12px', color: '#94a3b8', fontStyle: 'italic', padding: '24px', textAlign: 'center' }}>
-              Recommendation accepted & moved to {scene.card.targetColumn || 'In Progress'}
-            </div>
-          )}
-        </div>
-
-        <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '14px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', minHeight: '260px' }}>
-          <div style={{ fontSize: '12px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            In Progress (Active Sprint)
-          </div>
-
-          {assigned ? (
-            <div style={{ background: '#ffffff', border: '1.5px solid #8b5cf6', borderRadius: '12px', padding: '14px', boxShadow: '0 8px 20px rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '11px', fontWeight: 800, color: '#3b82f6' }}>{scene.card.key}</span>
-                <span style={{ fontSize: '11px', fontWeight: 800, color: '#7c3aed', background: '#ede9fe', padding: '3px 8px', borderRadius: '6px' }}>
-                  {scene.card.recommendedTo} ({scene.card.score})
+          {/* 3. Active Step Context Banner */}
+          <div className="friday-storyboard__step-banner" key={scene.id} aria-live="polite">
+            <div className="friday-storyboard__step-banner-main">
+              <div className="friday-storyboard__step-badge-line">
+                <span className="friday-storyboard__step-pill">
+                  STEP {i + 1} OF {scenes.length}
+                </span>
+                <span className="friday-storyboard__step-subtitle">
+                  {scene.subtitle}
                 </span>
               </div>
-              <div style={{ fontSize: '14px', fontWeight: 800, color: '#0f172a' }}>
-                {scene.card.title}
-              </div>
-              <div style={{ fontSize: '11px', color: '#059669', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
-                <CheckCircle2 size={13} /> Assigned with context & PR history attached
-              </div>
+              <p className="friday-storyboard__step-description">
+                {scene.description}
+              </p>
             </div>
-          ) : (
-            <div style={{ fontSize: '12px', color: '#94a3b8', padding: '24px', textAlign: 'center' }}>
-              Waiting for assignment confirmation...
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
 
-  // 6. SPRINT REBALANCE (has rebalanceAction alone)
-  if (scene.rebalanceAction && !scene.gitEvent) {
-    const isRebalanced = p >= 0.5 || isReducedMotion;
-    const act = scene.rebalanceAction;
-    const fromGauge = isRebalanced ? act.arjunAfter : act.arjunBefore;
-    const toGauge = isRebalanced ? act.meeraAfter : act.meeraBefore;
-
-    return (
-      <div className="friday-storyboard__s6-wrapper">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc', padding: '12px 18px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-          <span style={{ fontSize: '13px', fontWeight: 700, color: '#334155' }}>
-            Sprint Capacity Leveler:
-          </span>
-          <span style={{ fontSize: '12px', fontWeight: 800, color: isRebalanced ? '#10b981' : '#dc2626' }}>
-            {isRebalanced ? '✓ Sprint Balanced (Both under 100%)' : `⚠️ Bottleneck Detected (${act.from} Overloaded)`}
-          </span>
-        </div>
-
-        <div className="friday-storyboard__s6-balance-track">
-          <div style={{ background: '#ffffff', border: '1.5px solid #e2e8f0', borderRadius: '14px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a' }}>{act.from}</span>
-              <span style={{ fontSize: '14px', fontWeight: 800, color: fromGauge > 100 ? '#dc2626' : '#10b981' }}>
-                {fromGauge}%
-              </span>
-            </div>
-            <div style={{ height: '9px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
-              <div style={{ width: `${Math.min(fromGauge, 100)}%`, height: '100%', background: fromGauge > 100 ? '#ef4444' : '#10b981', transition: 'width 0.8s ease' }} />
-            </div>
-            <span style={{ fontSize: '12px', color: '#64748b' }}>
-              {isRebalanced ? 'Headroom restored under 100%' : 'Capacity cap exceeded'}
-            </span>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#8b5cf6' }}>
-            <ArrowRight size={26} />
-            <span style={{ fontSize: '11px', fontWeight: 800, color: '#7c3aed' }}>Shift</span>
-          </div>
-
-          <div style={{ background: '#ffffff', border: '1.5px solid #e2e8f0', borderRadius: '14px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a' }}>{act.to}</span>
-              <span style={{ fontSize: '14px', fontWeight: 800, color: '#10b981' }}>
-                {toGauge}%
-              </span>
-            </div>
-            <div style={{ height: '9px', background: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
-              <div style={{ width: `${toGauge}%`, height: '100%', background: '#10b981', transition: 'width 0.8s ease' }} />
-            </div>
-            <span style={{ fontSize: '12px', color: '#64748b' }}>
-              {isRebalanced ? 'Headroom balanced' : 'Available headroom'}
-            </span>
-          </div>
-        </div>
-
-        <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '10px', padding: '10px 16px', fontSize: '12px', color: '#1e40af', textAlign: 'center', fontWeight: 600 }}>
-          Rebalanced: <strong>{act.ticketMoved}</strong> shifted from {act.from} → {act.to} before sprint bottleneck formed.
-        </div>
-      </div>
-    );
-  }
-
-  // 7. SHIP LOOP & AUTOMATED STANDUP REPORT
-  if (scene.gitEvent || scene.sprintSummary) {
-    const summaryItems = scene.sprintSummary || [];
-
-    return (
-      <div className="friday-storyboard__s7-wrapper">
-        <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '12px', padding: '12px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '13px', fontWeight: 700, color: '#15803d' }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <GitMerge size={18} /> {scene.gitEvent?.pr || 'PR #142 Merged into main'}
-          </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <CheckCircle2 size={16} /> {scene.gitEvent?.checks || 'CI checks passed'}
-          </span>
-        </div>
-
-        <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '14px', padding: '20px', boxShadow: '0 4px 16px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #f1f5f9', paddingBottom: '10px' }}>
-            <span style={{ fontSize: '14px', fontWeight: 800, color: '#0f172a' }}>
-              Friday Sprint Standup Summary
-            </span>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: '#7c3aed', background: '#f5f3ff', padding: '3px 8px', borderRadius: '6px' }}>
-              Automated Standup Post
-            </span>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {summaryItems.map((item) => (
-              <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '13px' }}>
-                <span style={{ fontWeight: 600, color: '#334155' }}>{item.label}:</span>
-                <span style={{
-                  padding: '3px 10px',
-                  borderRadius: '6px',
-                  fontSize: '11px',
-                  fontWeight: 700,
-                  background: item.tone === 'success' ? '#dcfce7' : item.tone === 'warning' ? '#fef3c7' : '#f1f5f9',
-                  color: item.tone === 'success' ? '#166534' : item.tone === 'warning' ? '#92400e' : '#475569'
-                }}>
-                  {item.count}
+            <div className="friday-storyboard__step-banner-tags">
+              {scene.tags?.map((t) => (
+                <span key={t} className="friday-storyboard__banner-tag">
+                  {t}
                 </span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <div style={{ fontSize: '12px', color: '#64748b', borderTop: '1px solid #f8fafc', paddingTop: '10px' }}>
-            {scene.gitEvent?.ticket || 'Ticket'} automatically moved to Done upon PR merge. No manual Jira status updates required.
+          {/* 4. Animated Stage Canvas */}
+          <div className="friday-storyboard__stage-canvas" key={`stage-${scene.id}`}>
+            {SceneView}
+          </div>
+
+          {/* 5. Bottom Status Footnote */}
+          <div className="friday-storyboard__stage-footnote">
+            <span className="friday-storyboard__sample-label">
+              Sample data for illustration · Rule-based evaluation with AI summaries
+            </span>
+            <span className="friday-storyboard__hover-hint">
+              Hover to pause playback · {Math.round(total / 1000)}s full run
+            </span>
           </div>
         </div>
       </div>
-    );
-  }
-
-  return null;
+    </section>
+  );
 }

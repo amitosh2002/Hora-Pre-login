@@ -56,19 +56,33 @@
 }
 
 .navbar__link {
+  position: relative;
   font-size: 14px;
   font-weight: 500;
   color: colors.$slate-600;
   text-decoration: none;
+  padding: 6px 0;
   transition: color 0.2s ease;
 
   &:hover {
-    color: #8b5cf6;
+    color: #7c3aed;
   }
 
   &--active {
-    color: colors.$slate-900;
+    color: #7c3aed;
     font-weight: 600;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2.5px;
+      border-radius: 99px;
+      background: #7c3aed;
+      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
+    }
   }
 }
 

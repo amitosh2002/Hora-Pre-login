@@ -78,287 +78,36 @@
     }
   }
 
-  // Main interactive grid
-  &__layout {
-    display: grid;
-    grid-template-columns: 370px 1fr;
-    gap: 36px;
-    align-items: start;
-
-    @media (max-width: 1024px) {
-      grid-template-columns: 330px 1fr;
-      gap: 24px;
-    }
-
-    @media (max-width: 860px) {
-      display: flex;
-      flex-direction: column-reverse; // stage on top, captions below
-    }
-  }
-
-  // Left sidebar
-  &__sidebar {
+  // SINGLE UNIFIED BROWSER WINDOW (Light Mode)
+  &__unified-frame {
     background: #ffffff;
-    border-radius: 16px;
-    border: 1px solid colors.$slate-200;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    @media (max-width: 860px) {
-      width: 100%;
-      box-sizing: border-box;
-    }
-  }
-
-  &__steps-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    @media (max-width: 860px) {
-      display: flex;
-      flex-direction: row;
-      overflow-x: auto;
-      gap: 12px;
-      padding-bottom: 8px;
-      scroll-snap-type: x mandatory;
-
-      &::-webkit-scrollbar {
-        height: 6px;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: colors.$slate-300;
-        border-radius: 3px;
-      }
-    }
-  }
-
-  &__step-item {
-    @media (max-width: 860px) {
-      flex: 0 0 240px;
-      scroll-snap-align: start;
-    }
-  }
-
-  &__step-button {
-    width: 100%;
-    text-align: left;
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: 12px;
-    padding: 12px 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: all 0.2s ease;
-    color: colors.$slate-700;
-
-    &:hover {
-      background: colors.$slate-50;
-      border-color: colors.$slate-200;
-    }
-
-    &:focus-visible {
-      outline: 2px solid #8b5cf6;
-      outline-offset: 2px;
-    }
-
-    &--active {
-      background: #faf5ff;
-      border-color: #ddd6fe;
-      color: #6b21a8;
-      box-shadow: 0 2px 10px rgba(139, 92, 246, 0.08);
-
-      .friday-storyboard__step-icon-box {
-        background: #8b5cf6;
-        color: #ffffff;
-        box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3);
-      }
-
-      .friday-storyboard__step-title {
-        color: #581c87;
-        font-weight: 700;
-      }
-    }
-  }
-
-  &__step-icon-box {
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    background: colors.$slate-100;
-    color: colors.$slate-600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.2s ease;
-  }
-
-  &__step-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  &__step-title {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.25;
-    margin-bottom: 2px;
-    display: block;
-  }
-
-  &__step-snippet {
-    font-size: 11px;
-    color: colors.$slate-500;
-    line-height: 1.35;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-  }
-
-  // Active scene live caption box
-  &__active-caption {
-    background: colors.$slate-50;
-    border: 1px solid colors.$slate-200;
-    border-radius: 12px;
-    padding: 16px;
-    margin-top: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  &__active-heading {
-    font-size: 14px;
-    font-weight: 700;
-    color: colors.$slate-900;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  &__active-desc {
-    font-size: 13px;
-    line-height: 1.55;
-    color: colors.$slate-600;
-    margin: 0;
-  }
-
-  &__active-doc-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #7c3aed;
-    text-decoration: none;
-    margin-top: 4px;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  // Playback toolbar
-  &__controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 12px;
-    border-top: 1px solid colors.$slate-200;
-  }
-
-  &__control-buttons {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  &__ctrl-btn {
-    background: #ffffff;
-    border: 1px solid colors.$slate-200;
-    color: colors.$slate-700;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.15s ease;
-
-    &:hover {
-      background: colors.$slate-50;
-      border-color: colors.$slate-300;
-      color: colors.$slate-900;
-    }
-
-    &:focus-visible {
-      outline: 2px solid #8b5cf6;
-      outline-offset: 2px;
-    }
-
-    &--play {
-      background: #8b5cf6;
-      border-color: #8b5cf6;
-      color: #ffffff;
-
-      &:hover {
-        background: #7c3aed;
-        border-color: #7c3aed;
-        color: #ffffff;
-      }
-    }
-  }
-
-  &__timing-indicator {
-    font-size: 12px;
-    font-weight: 600;
-    color: colors.$slate-500;
-  }
-
-  // Right side stage
-  &__stage-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    @media (max-width: 860px) {
-      width: 100%;
-    }
-  }
-
-  // Browser frame container
-  &__browser-frame {
-    background: #ffffff;
-    border: 1px solid colors.$slate-200;
-    border-radius: 16px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+    border: 1.5px solid colors.$slate-200;
+    border-radius: 20px;
+    box-shadow: 0 20px 45px -15px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.04);
     overflow: hidden;
     position: relative;
     display: flex;
     flex-direction: column;
+    max-width: 1140px;
+    margin: 0 auto;
+    box-sizing: border-box;
   }
 
+  // 1. Browser Window Top Chrome Bar
   &__browser-header {
     background: colors.$slate-50;
     border-bottom: 1px solid colors.$slate-200;
-    padding: 12px 18px;
+    padding: 12px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 48px;
+    gap: 16px;
+    min-height: 48px;
     box-sizing: border-box;
+
+    @media (max-width: 640px) {
+      padding: 10px 14px;
+    }
   }
 
   &__window-dots {
@@ -388,6 +137,16 @@
     display: flex;
     align-items: center;
     gap: 6px;
+
+    @media (max-width: 768px) {
+      display: none; // hide address on smaller screens
+    }
+  }
+
+  &__header-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
   &__live-tag {
@@ -410,6 +169,49 @@
     background-color: #8b5cf6;
   }
 
+  &__control-buttons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__ctrl-btn {
+    background: #ffffff;
+    border: 1px solid colors.$slate-200;
+    color: colors.$slate-700;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background: colors.$slate-50;
+      border-color: colors.$slate-300;
+      color: colors.$slate-900;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #8b5cf6;
+      outline-offset: 1px;
+    }
+
+    &--play {
+      background: #8b5cf6;
+      border-color: #8b5cf6;
+      color: #ffffff;
+
+      &:hover {
+        background: #7c3aed;
+        border-color: #7c3aed;
+        color: #ffffff;
+      }
+    }
+  }
+
   &__progress-line {
     position: absolute;
     top: 47px;
@@ -420,21 +222,217 @@
     transition: width 0.1s linear;
   }
 
-  // Stage content canvas
+  // 2. Horizontal Step Tabs Across Top of Frame
+  &__steps-bar {
+    background: #ffffff;
+    border-bottom: 1px solid colors.$slate-200;
+    padding: 8px 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  &__steps-track {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: max-content;
+  }
+
+  &__step-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: colors.$slate-600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: colors.$slate-50;
+      color: colors.$slate-900;
+    }
+
+    &.is-active {
+      background: #f5f3ff;
+      border-color: #ddd6fe;
+      color: #6d28d9;
+      font-weight: 700;
+
+      .friday-storyboard__step-tab-icon {
+        color: #7c3aed;
+      }
+
+      .friday-storyboard__step-tab-num {
+        color: #7c3aed;
+      }
+    }
+
+    &.is-past {
+      color: colors.$slate-700;
+      .friday-storyboard__step-tab-num {
+        color: #8b5cf6;
+      }
+    }
+  }
+
+  &__step-tab-icon {
+    color: colors.$slate-400;
+    display: flex;
+    align-items: center;
+    transition: color 0.15s ease;
+  }
+
+  &__step-tab-num {
+    font-size: 11px;
+    font-weight: 800;
+    color: colors.$slate-400;
+    letter-spacing: 0.05em;
+  }
+
+  &__step-tab-title {
+    white-space: nowrap;
+  }
+
+  &__step-tab-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: #7c3aed;
+    transition: width 0.1s linear;
+  }
+
+  // 3. Active Step Context Banner
+  &__step-banner {
+    background: #fafbff;
+    border-bottom: 1px solid colors.$slate-200;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    animation: fsbBannerIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+    @media (max-width: 860px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+    }
+  }
+
+  @keyframes fsbBannerIn {
+    from { opacity: 0.6; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  &__step-banner-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__step-badge-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  &__step-pill {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: #6d28d9;
+    background: #ede9fe;
+    border: 1px solid #ddd6fe;
+    padding: 2px 8px;
+    border-radius: 99px;
+  }
+
+  &__step-subtitle {
+    font-size: 14px;
+    font-weight: 700;
+    color: colors.$slate-900;
+  }
+
+  &__step-description {
+    font-size: 13px;
+    line-height: 1.55;
+    color: colors.$slate-600;
+    margin: 4px 0 0 0;
+  }
+
+  &__step-banner-tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+
+  &__banner-tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: colors.$slate-700;
+    background: #ffffff;
+    border: 1px solid colors.$slate-200;
+    padding: 3px 9px;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  }
+
+  // 4. Stage Canvas (Light Mode)
   &__stage-canvas {
     background: #ffffff;
-    min-height: 480px;
-    padding: 28px;
+    min-height: 440px;
+    padding: 32px 28px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
     position: relative;
     box-sizing: border-box;
 
     @media (max-width: 640px) {
-      padding: 16px;
-      min-height: 420px;
+      padding: 18px 14px;
+      min-height: 380px;
     }
+  }
+
+  // 5. Stage Footnote
+  &__stage-footnote {
+    background: colors.$slate-50;
+    border-top: 1px solid colors.$slate-200;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: colors.$slate-500;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+      padding: 10px 14px;
+    }
+  }
+
+  &__sample-label {
+    font-weight: 500;
+  }
+
+  &__hover-hint {
+    font-style: normal;
+    color: colors.$slate-400;
   }
 
   // Footnote

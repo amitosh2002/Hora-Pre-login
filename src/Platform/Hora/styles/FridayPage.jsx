@@ -19,7 +19,12 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './FridayPage.scss';
-import { FRIDAY_TECHNICAL_SCENES } from '../../../components/FridayStoryboard';
+import { FRIDAY_TECHNICAL_SCENES } from '../../../components/FridayStoryboard/fridayScenes';
+import workChatSvg from '../../../assets/illustrations/undraw_work-chat_kw8x.svg';
+import workingTogetherSvg from '../../../assets/illustrations/undraw_working-together_r43a.svg';
+import dataAnalyticsSvg from '../../../assets/illustrations/undraw_data_analytics.svg';
+import codeReviewSvg from '../../../assets/illustrations/undraw_code_review.svg';
+import launchShipSvg from '../../../assets/illustrations/undraw_launch_ship.svg';
 
 const FridayStoryboard = lazy(() => import('../../../components/FridayStoryboard'));
 
@@ -55,6 +60,12 @@ export default function FridayPage() {
       
       {/* Hero Section */}
       <section className="friday-page__hero">
+        <div className="friday-page__hero-bg-illu friday-page__hero-bg-illu--left" aria-hidden="true">
+          <img src={workChatSvg} alt="" />
+        </div>
+        <div className="friday-page__hero-bg-illu friday-page__hero-bg-illu--right" aria-hidden="true">
+          <img src={workingTogetherSvg} alt="" />
+        </div>
         <div className="friday-page__hero-inner">
           <motion.div 
             className="friday-page__eyebrow"
@@ -146,6 +157,9 @@ export default function FridayPage() {
 
           <div className="friday-page__algorithm-grid">
             <div className="friday-page__formula-box">
+              <div className="friday-page__illu-card">
+                <img src={dataAnalyticsSvg} alt="6-Factor Algorithm Scoring" />
+              </div>
               <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', margin: '0 0 12px 0' }}>
                 Capability Score Equation
               </h3>
@@ -199,6 +213,10 @@ export default function FridayPage() {
             </p>
           </div>
 
+          <div className="friday-page__section-illu-strip">
+            <img src={codeReviewSvg} alt="Code Review and Policy Inspection" />
+          </div>
+
           <div className="friday-page__gates-grid">
             {policyGates.map((gate) => (
               <div key={gate.title} className={`friday-page__gate-card friday-page__gate-card--${gate.color}`}>
@@ -249,13 +267,20 @@ export default function FridayPage() {
 
       {/* CTA Band */}
       <section className="friday-page__cta">
-        <h2 className="friday-page__cta-title">Your next sprint deserves a PM that explains itself.</h2>
-        <p className="friday-page__cta-subtitle">
-          Connect your GitHub org in under two minutes. Free for teams under 10. No credit card required.
-        </p>
-        <a href="https://app.hora.team" className="friday-page__cta-btn">
-          Get Started Free <ArrowRight size={18} />
-        </a>
+        <div className="friday-page__cta-inner">
+          <div className="friday-page__cta-content">
+            <h2 className="friday-page__cta-title">Your next sprint deserves a PM that explains itself.</h2>
+            <p className="friday-page__cta-subtitle">
+              Connect your GitHub org in under two minutes. Free for teams under 10. No credit card required.
+            </p>
+            <a href="https://app.hora.team" className="friday-page__cta-btn">
+              Get Started Free <ArrowRight size={18} />
+            </a>
+          </div>
+          <div className="friday-page__cta-illu" aria-hidden="true">
+            <img src={launchShipSvg} alt="Ship to Production" />
+          </div>
+        </div>
       </section>
 
     </div>

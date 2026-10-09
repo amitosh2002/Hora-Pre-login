@@ -1,0 +1,220 @@
+// Styles and animations for Friday Step Illustrations
+
+.friday-step-illustration {
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
+
+  &__svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+// Keyframe Animations
+
+// 1. Dash flow along SVG path lines
+@keyframes fsiDashFlow {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.fsi-dash-flow {
+  animation: fsiDashFlow 1.2s linear infinite;
+}
+
+// 2. Pulse Ring
+@keyframes fsiPulseRing {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+}
+
+.fsi-pulse-ring {
+  transform-origin: center;
+  animation: fsiPulseRing 2.4s ease-in-out infinite;
+}
+
+// 3. Floating ticket card
+@keyframes fsiFloatCard {
+  0%, 100% {
+    transform: translate(100px, 24px);
+  }
+  50% {
+    transform: translate(100px, 20px);
+  }
+}
+
+.fsi-float-card {
+  animation: fsiFloatCard 3s ease-in-out infinite;
+}
+
+// 4. Laser scan beam moving over the ticket
+@keyframes fsiScanLaser {
+  0% {
+    transform: translateY(0px);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(98px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 0.3;
+  }
+}
+
+.fsi-scan-laser {
+  animation: fsiScanLaser 2.2s ease-in-out infinite alternate;
+}
+
+// 5. Spin Dial
+@keyframes fsiSpinDial {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fsi-spin-dial {
+  transform-origin: center;
+  animation: fsiSpinDial 12s linear infinite;
+}
+
+// 6. Node Pulse Dot
+@keyframes fsiPulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+.fsi-pulse-dot {
+  transform-origin: center;
+  animation: fsiPulseDot 1.8s ease-in-out infinite;
+}
+
+// 7. Growing Equalizer Factor Bars
+@keyframes fsiBarPulse {
+  0%, 100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(0.85);
+  }
+}
+
+.fsi-bar-grow-1 { transform-origin: left; animation: fsiBarPulse 2.8s ease-in-out infinite; }
+.fsi-bar-grow-2 { transform-origin: left; animation: fsiBarPulse 2.4s ease-in-out 0.2s infinite; }
+.fsi-bar-grow-3 { transform-origin: left; animation: fsiBarPulse 2.6s ease-in-out 0.4s infinite; }
+.fsi-bar-grow-4 { transform-origin: left; animation: fsiBarPulse 3s ease-in-out 0.1s infinite; }
+.fsi-bar-grow-5 { transform-origin: left; animation: fsiBarPulse 2.5s ease-in-out 0.3s infinite; }
+
+// 8. Shield Glow
+@keyframes fsiShieldGlow {
+  0%, 100% {
+    filter: drop-shadow(0 4px 12px rgba(124, 58, 237, 0.15));
+  }
+  50% {
+    filter: drop-shadow(0 8px 24px rgba(124, 58, 237, 0.35));
+  }
+}
+
+.fsi-shield-pulse {
+  animation: fsiShieldGlow 2.5s ease-in-out infinite;
+}
+
+// 9. Card Landing slide
+@keyframes fsiCardLanding {
+  0% {
+    transform: translate(10px, 26px);
+  }
+  50% {
+    transform: translate(10px, 22px);
+  }
+  100% {
+    transform: translate(10px, 26px);
+  }
+}
+
+.fsi-card-landing {
+  animation: fsiCardLanding 3s ease-in-out infinite;
+}
+
+// 10. Flying Ticket for Sprint Rebalance
+@keyframes fsiFlyingTicket {
+  0% {
+    transform: translate(75px, 45px) rotate(-8deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(160px, 15px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(240px, 45px) rotate(8deg);
+    opacity: 0.9;
+  }
+}
+
+.fsi-flying-ticket {
+  animation: fsiFlyingTicket 3.4s ease-in-out infinite alternate;
+}
+
+// 11. PR Merge Burst
+@keyframes fsiMergeBurst {
+  0%, 100% {
+    transform: translate(160px, 60px) scale(1);
+  }
+  50% {
+    transform: translate(160px, 60px) scale(1.1);
+  }
+}
+
+.fsi-merge-burst {
+  animation: fsiMergeBurst 2.2s ease-in-out infinite;
+}
+
+// 12. Floating Tag Chips
+@keyframes fsiTagBob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.fsi-tag-chip-1 { animation: fsiTagBob 2.2s ease-in-out infinite; }
+.fsi-tag-chip-2 { animation: fsiTagBob 2.4s ease-in-out 0.2s infinite; }
+.fsi-tag-chip-3 { animation: fsiTagBob 2.6s ease-in-out 0.4s infinite; }
