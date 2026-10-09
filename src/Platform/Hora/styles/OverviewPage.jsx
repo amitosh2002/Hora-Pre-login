@@ -13,6 +13,9 @@ import { motion } from 'framer-motion';
 import './styles/OverviewPage.scss';
 import AnalyticsDashboardGraphic from '../../../components/Graphics/AnalyticsDashboardGraphic';
 
+import coWorkingSvg from '../../../assets/illustrations/undraw_co-working_becw.svg';
+import launchShipSvg from '../../../assets/illustrations/undraw_launch_ship.svg';
+
 export default function OverviewPage() {
   const platformFeatures = [
     {
@@ -403,8 +406,9 @@ export default function OverviewPage() {
       </section>
 
       {/* AI Section (Deterministic Engine + Plain English Summaries) */}
-      <section style={{ background: '#f8fafc', padding: '120px 40px' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '60px', alignItems: 'center' }}>
+      <section className="ambient-bg-illu-container" style={{ background: '#f8fafc', padding: '120px 40px', position: 'relative', overflow: 'hidden' }}>
+        <img src={coWorkingSvg} alt="" className="ambient-bg-illu ambient-bg-illu--bottom-left" aria-hidden="true" style={{ opacity: 0.12, width: '360px', bottom: '-30px', left: '-30px' }} />
+        <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '60px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
             
             <div style={{ textAlign: 'left' }}>
               <div style={{ color: '#8b5cf6', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '16px', fontSize: '14px' }}>How we use AI</div>
@@ -472,15 +476,18 @@ export default function OverviewPage() {
       </section>
 
       {/* CTA Band */}
-      <section style={{ padding: '80px 40px', textAlign: 'center', background: '#1e293b', color: 'white' }}>
-        <h2 style={{ fontSize: '36px', fontWeight: 800, margin: '0 0 16px 0' }}>See it against your own repos.</h2>
-        <p style={{ fontSize: '18px', opacity: 0.9, marginBottom: '32px', color: '#cbd5e1' }}>Connect a GitHub org and watch Hora Matrix populate in minutes.</p>
-        <button 
-          style={{ background: '#ec4899', color: 'white', padding: '16px 32px', borderRadius: '12px', fontWeight: 700, fontSize: '16px', border: 'none', cursor: 'pointer', transition: 'background 0.2s' }}
-          onClick={() => window.location.href = 'https://app.hora.team'}
-        >
-          Connect GitHub Org
-        </button>
+      <section className="ambient-bg-illu-container" style={{ padding: '80px 40px', textAlign: 'center', background: '#1e293b', color: 'white', position: 'relative', overflow: 'hidden' }}>
+        <img src={launchShipSvg} alt="" className="ambient-bg-illu ambient-bg-illu--bottom-right" aria-hidden="true" style={{ opacity: 0.12, filter: 'brightness(0) invert(1)', width: '300px', bottom: '-20px', right: '4%' }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <h2 style={{ fontSize: '36px', fontWeight: 800, margin: '0 0 16px 0' }}>See it against your own repos.</h2>
+          <p style={{ fontSize: '18px', opacity: 0.9, marginBottom: '32px', color: '#cbd5e1' }}>Connect a GitHub org and watch Hora Matrix populate in minutes.</p>
+          <button 
+            style={{ background: '#ec4899', color: 'white', padding: '16px 32px', borderRadius: '12px', fontWeight: 700, fontSize: '16px', border: 'none', cursor: 'pointer', transition: 'background 0.2s' }}
+            onClick={() => window.location.href = 'https://app.hora.team'}
+          >
+            Connect GitHub Org
+          </button>
+        </div>
       </section>
     </div>
   );

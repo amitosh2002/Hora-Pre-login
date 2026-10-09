@@ -2,9 +2,15 @@ import React from 'react';
 import { Target, BrainCircuit, Users, CheckCircle2, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './AboutUs.scss';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import teamUpSvg from '../../assets/illustrations/undraw_team-up_qeem.svg';
+import inviteSvg from '../../assets/illustrations/undraw_invite_ds8f.svg';
+import inTheOfficeSvg from '../../assets/illustrations/undraw_in-the-office_ma2b.svg';
+import launchShipSvg from '../../assets/illustrations/undraw_launch_ship.svg';
 
 export default function AboutUs() {
+  const navigate = useNavigate();
   const [activeMilestone, setActiveMilestone] = React.useState(3);
 
   const values = [
@@ -45,8 +51,10 @@ export default function AboutUs() {
   return (
     <div className="page-container about-page">
       {/* Clean Hero Section */}
-      <section className="hero-clean">
-        <div className="hero-clean__content">
+      <section className="hero-clean ambient-bg-illu-container" style={{ position: 'relative', overflow: 'hidden' }}>
+        <img src={teamUpSvg} alt="" className="ambient-bg-illu ambient-bg-illu--left" aria-hidden="true" />
+        <img src={inviteSvg} alt="" className="ambient-bg-illu ambient-bg-illu--right" aria-hidden="true" />
+        <div className="hero-clean__content" style={{ position: 'relative', zIndex: 1 }}>
           <div className="hero-clean__text-area" style={{ maxWidth: '800px', gridColumn: '1 / -1', margin: '0 auto', textAlign: 'center', alignItems: 'center' }}>
             <motion.div 
               className="hero-eyebrow"
@@ -321,8 +329,9 @@ export default function AboutUs() {
       </section>
 
       {/* How we build */}
-      <section style={{ background: '#f8fafc', padding: '100px 40px' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center' }}>
+      <section className="ambient-bg-illu-container" style={{ background: '#f8fafc', padding: '100px 40px', position: 'relative', overflow: 'hidden' }}>
+        <img src={inTheOfficeSvg} alt="" className="ambient-bg-illu ambient-bg-illu--bottom-right" aria-hidden="true" style={{ opacity: 0.12, width: '360px', bottom: '-40px', right: '-40px' }} />
+        <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
             <div style={{ color: '#8b5cf6', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '16px', fontSize: '14px' }}>Philosophy</div>
             <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#1e293b', marginBottom: '60px' }}>How we build.</h2>
             
@@ -361,15 +370,18 @@ export default function AboutUs() {
       </section>
 
       {/* CTA Band */}
-      <section style={{ padding: '80px 40px', textAlign: 'center', background: '#1e293b', color: 'white' }}>
-        <h2 style={{ fontSize: '36px', fontWeight: 800, marginBottom: '16px' }}>Come build with us.</h2>
-        <p style={{ fontSize: '18px', opacity: 0.9, marginBottom: '32px', color: '#cbd5e1' }}>We're always looking for engineers who care about this kind of detail.</p>
-        <button 
-          style={{ background: '#8b5cf6', color: 'white', padding: '16px 32px', borderRadius: '8px', fontWeight: 700, fontSize: '16px', border: 'none', cursor: 'pointer' }}
-          onClick={() => Navigate('/careers')}
-        >
-          View Open Roles
-        </button>
+      <section className="ambient-bg-illu-container" style={{ padding: '80px 40px', textAlign: 'center', background: '#1e293b', color: 'white', position: 'relative', overflow: 'hidden' }}>
+        <img src={launchShipSvg} alt="" className="ambient-bg-illu ambient-bg-illu--bottom-right" aria-hidden="true" style={{ opacity: 0.12, filter: 'brightness(0) invert(1)', width: '300px', bottom: '-20px', right: '4%' }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <h2 style={{ fontSize: '36px', fontWeight: 800, marginBottom: '16px' }}>Come build with us.</h2>
+          <p style={{ fontSize: '18px', opacity: 0.9, marginBottom: '32px', color: '#cbd5e1' }}>We're always looking for engineers who care about this kind of detail.</p>
+          <button 
+            style={{ background: '#8b5cf6', color: 'white', padding: '16px 32px', borderRadius: '8px', fontWeight: 700, fontSize: '16px', border: 'none', cursor: 'pointer' }}
+            onClick={() => navigate('/careers')}
+          >
+            View Open Roles
+          </button>
+        </div>
       </section>
     </div>
   );

@@ -179,3 +179,68 @@ a {
   .design-block { border-radius: 30px !important; }
   .design-block-inner { padding: 40px 20px; }
 }
+
+/* Ambient Background Illustrations System */
+.ambient-bg-illu-container {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.ambient-bg-illu {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.15;
+  user-select: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.ambient-bg-illu img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 14px 28px rgba(124, 58, 237, 0.08));
+}
+
+.ambient-bg-illu--left {
+  left: -60px;
+  top: 40px;
+  width: 440px;
+  max-width: 32%;
+}
+
+.ambient-bg-illu--right {
+  right: -60px;
+  top: 50px;
+  width: 460px;
+  max-width: 34%;
+}
+
+.ambient-bg-illu--bottom-right {
+  right: -40px;
+  bottom: 0px;
+  width: 420px;
+  max-width: 30%;
+}
+
+.ambient-bg-illu--bottom-left {
+  left: -40px;
+  bottom: 0px;
+  width: 420px;
+  max-width: 30%;
+}
+
+.ambient-bg-illu--center-faded {
+  left: 50%;
+  transform: translateX(-50%);
+  top: 30px;
+  width: 600px;
+  max-width: 60%;
+  opacity: 0.09;
+}
+
+@media (max-width: 900px) {
+  .ambient-bg-illu {
+    display: none !important;
+  }
+}

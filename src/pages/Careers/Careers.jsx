@@ -3,11 +3,16 @@ import { motion } from 'framer-motion';
 import { Briefcase, ArrowRight } from 'lucide-react';
 import './Careers.scss';
 
+import coWorkingSvg from '../../assets/illustrations/undraw_co-working_becw.svg';
+import officeSvg from '../../assets/illustrations/undraw_in-the-office_ma2b.svg';
+
 export default function Careers() {
   return (
     <div className="page-container careers-page">
-      <section className="hero-clean">
-        <div className="hero-clean__content" style={{ gridTemplateColumns: '1fr', textAlign: 'center' }}>
+      <section className="hero-clean ambient-bg-illu-container" style={{ position: 'relative', overflow: 'hidden' }}>
+        <img src={coWorkingSvg} alt="" className="ambient-bg-illu ambient-bg-illu--left" aria-hidden="true" />
+        <img src={officeSvg} alt="" className="ambient-bg-illu ambient-bg-illu--right" aria-hidden="true" />
+        <div className="hero-clean__content" style={{ gridTemplateColumns: '1fr', textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <div className="hero-clean__text-area" style={{ maxWidth: '800px', margin: '0 auto', alignItems: 'center' }}>
             <motion.div 
               className="hero-eyebrow"

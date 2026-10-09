@@ -7,6 +7,11 @@ import HeroGraphic from '../../../components/Graphics/HeroGraphic';
 import './styles/HoraServicesIntro.scss';
 import { FRIDAY_LANDING_SCENES } from '../../../components/FridayStoryboard';
 
+import teamCollabSvg from '../../../assets/illustrations/undraw_team-collaboration_phnf.svg';
+import liveCollabSvg from '../../../assets/illustrations/undraw_live-collaboration_i8an.svg';
+import buildingWebsitesSvg from '../../../assets/illustrations/undraw_building-websites_k2zp.svg';
+import launchShipSvg from '../../../assets/illustrations/undraw_launch_ship.svg';
+
 const FridayStoryboard = lazy(() => import('../../../components/FridayStoryboard'));
 
 export default function HoraServicesIntro() {
@@ -343,8 +348,9 @@ export default function HoraServicesIntro() {
       </section>
 
       {/* Hora Matrix Showcase */}
-      <section style={{ background: '#f8fafc', padding: '100px 40px', borderTop: '1px solid #e2e8f0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '80px', alignItems: 'center' }}>
+      <section className="ambient-bg-illu-container" style={{ background: '#f8fafc', padding: '100px 40px', borderTop: '1px solid #e2e8f0', position: 'relative', overflow: 'hidden' }}>
+        <img src={buildingWebsitesSvg} alt="" className="ambient-bg-illu ambient-bg-illu--bottom-right" aria-hidden="true" style={{ opacity: 0.12, width: '380px', bottom: '-40px', right: '-40px' }} />
+        <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '80px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
           
           <motion.div 
             style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
@@ -419,15 +425,18 @@ export default function HoraServicesIntro() {
       </section>
 
       {/* CTA Band */}
-      <section style={{ padding: '100px 40px', textAlign: 'center', background: '#8b5cf6', color: 'white' }}>
-        <h2 style={{ fontSize: '40px', fontWeight: 800, marginBottom: '16px' }}>Your next sprint deserves real numbers.</h2>
-        <p style={{ fontSize: '18px', opacity: 0.9, marginBottom: '32px' }}>Free for teams under 10. No credit card, no sales call.</p>
-        <button 
-          style={{ background: 'white', color: '#8b5cf6', padding: '16px 32px', borderRadius: '8px', fontWeight: 700, fontSize: '16px', border: 'none', cursor: 'pointer' }}
-          onClick={() => window.location.href = 'https://app.hora.team'}
-        >
-          Start building now
-        </button>
+      <section className="ambient-bg-illu-container" style={{ padding: '100px 40px', textAlign: 'center', background: '#8b5cf6', color: 'white', position: 'relative', overflow: 'hidden' }}>
+        <img src={launchShipSvg} alt="" className="ambient-bg-illu ambient-bg-illu--bottom-right" aria-hidden="true" style={{ opacity: 0.15, filter: 'brightness(0) invert(1)', width: '320px', bottom: '-30px', right: '5%' }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <h2 style={{ fontSize: '40px', fontWeight: 800, marginBottom: '16px' }}>Your next sprint deserves real numbers.</h2>
+          <p style={{ fontSize: '18px', opacity: 0.9, marginBottom: '32px' }}>Free for teams under 10. No credit card, no sales call.</p>
+          <button 
+            style={{ background: 'white', color: '#8b5cf6', padding: '16px 32px', borderRadius: '8px', fontWeight: 700, fontSize: '16px', border: 'none', cursor: 'pointer' }}
+            onClick={() => window.location.href = 'https://app.hora.team'}
+          >
+            Start building now
+          </button>
+        </div>
       </section>
 
       {/* Demo Modal */}

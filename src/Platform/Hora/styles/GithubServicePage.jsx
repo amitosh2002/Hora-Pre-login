@@ -13,6 +13,10 @@ import { motion } from 'framer-motion';
 import './styles/GitHubServicePage.scss';
 import GitHubFlowGraphic from '../../../components/Graphics/GitHubFlowGraphic';
 
+import codeReviewSvg from '../../../assets/illustrations/undraw_code_review.svg';
+import coWorkingSvg from '../../../assets/illustrations/undraw_co-working_becw.svg';
+import launchShipSvg from '../../../assets/illustrations/undraw_launch_ship.svg';
+
 export default function GitHubServicePage() {
   const flowCards = [
     {
@@ -452,15 +456,18 @@ export default function GitHubServicePage() {
       </section>
 
       {/* CTA Band */}
-      <section style={{ padding: '80px 40px', textAlign: 'center', background: '#8b5cf6', color: 'white' }}>
-        <h2 style={{ fontSize: '36px', fontWeight: 800, marginBottom: '16px' }}>Connect your org in under two minutes.</h2>
-        <p style={{ fontSize: '18px', opacity: 0.9, marginBottom: '32px' }}>No YAML to write by hand — Hora handles the wiring.</p>
-        <button 
-          style={{ background: 'white', color: '#8b5cf6', padding: '16px 32px', borderRadius: '8px', fontWeight: 700, fontSize: '16px', border: 'none', cursor: 'pointer' }}
-          onClick={() => window.location.href = 'https://app.hora.team'}
-        >
-          Connect GitHub
-        </button>
+      <section className="ambient-bg-illu-container" style={{ padding: '80px 40px', textAlign: 'center', background: '#8b5cf6', color: 'white', position: 'relative', overflow: 'hidden' }}>
+        <img src={launchShipSvg} alt="" className="ambient-bg-illu ambient-bg-illu--bottom-right" aria-hidden="true" style={{ opacity: 0.15, filter: 'brightness(0) invert(1)', width: '300px', bottom: '-20px', right: '5%' }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <h2 style={{ fontSize: '36px', fontWeight: 800, marginBottom: '16px' }}>Connect your org in under two minutes.</h2>
+          <p style={{ fontSize: '18px', opacity: 0.9, marginBottom: '32px' }}>No YAML to write by hand — Hora handles the wiring.</p>
+          <button 
+            style={{ background: 'white', color: '#8b5cf6', padding: '16px 32px', borderRadius: '8px', fontWeight: 700, fontSize: '16px', border: 'none', cursor: 'pointer' }}
+            onClick={() => window.location.href = 'https://app.hora.team'}
+          >
+            Connect GitHub
+          </button>
+        </div>
       </section>
     </div>
   );
