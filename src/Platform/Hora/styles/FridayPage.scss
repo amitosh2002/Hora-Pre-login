@@ -157,6 +157,38 @@
     }
   }
 
+  &__btn-video {
+    background: #ffffff;
+    color: #6d28d9;
+    padding: 16px 28px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    border: 1.5px solid #ddd6fe;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.12);
+
+    .play-icon {
+      color: #7c3aed;
+      transition: transform 0.2s ease;
+    }
+
+    &:hover {
+      background: #f5f3ff;
+      border-color: #c4b5fd;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
+
+      .play-icon {
+        transform: scale(1.15);
+      }
+    }
+  }
+
   // Key stats ribbon
   &__stats-ribbon {
     display: grid;
@@ -572,5 +604,98 @@
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     }
+  }
+}
+
+// Video Popup Modal
+.friday-video-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 24px;
+  animation: fridayModalFadeIn 0.2s ease;
+}
+
+.friday-video-modal-content {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(124, 58, 237, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+.friday-video-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #1e293b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  .friday-video-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+
+    svg {
+      color: #a78bfa;
+    }
+  }
+
+  .friday-video-modal-close {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #cbd5e1;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(239, 68, 68, 0.25);
+      border-color: rgba(239, 68, 68, 0.5);
+      color: #f87171;
+    }
+  }
+}
+
+.friday-video-modal-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000000;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+}
+
+@keyframes fridayModalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

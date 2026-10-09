@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { 
   Sparkles, 
   ArrowRight, 
@@ -15,7 +15,8 @@ import {
   X, 
   Activity,
   Layers,
-  ArrowUpRight
+  ArrowUpRight,
+  PlayCircle
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './FridayPage.scss';
@@ -29,6 +30,21 @@ import launchShipSvg from '../../../assets/illustrations/undraw_launch_ship.svg'
 const FridayStoryboard = lazy(() => import('../../../components/FridayStoryboard'));
 
 export default function FridayPage() {
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setIsVideoModalOpen(false);
+    };
+    if (isVideoModalOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isVideoModalOpen]);
   const factors = [
     { name: 'Skill Match', weight: '35%', desc: 'Parsed from repo manifests (Node, Redis, Docker) and commit language distributions.' },
     { name: 'Project Experience', weight: '20%', desc: 'Historical PR merges, module touches, and directory-level code contributions.' },
@@ -104,8 +120,16 @@ export default function FridayPage() {
             <a href="https://app.hora.team" className="friday-page__btn-primary">
               Start Free with Friday <ArrowRight size={18} />
             </a>
+            <button 
+              type="button"
+              className="friday-page__btn-video"
+              onClick={() => setIsVideoModalOpen(true)}
+            >
+              <PlayCircle size={20} className="play-icon" />
+              <span>Watch Friday in Action</span>
+            </button>
             <a href="#interactive-storyboard" className="friday-page__btn-secondary">
-              Experience Interactive Storyboard ↓
+              Interactive Storyboard ↓
             </a>
           </motion.div>
 
@@ -282,6 +306,52 @@ export default function FridayPage() {
           </div>
         </div>
       </section>
+
+      {/* Video Popup Modal */}
+      {isVideoModalOpen && (
+        <div 
+          className="friday-video-modal-backdrop"
+          onClick={() => setIsVideoModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="How Friday AI Works Demo Video"
+        >
+          <motion.div 
+            className="friday-video-modal-content"
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ duration: 0.2 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="friday-video-modal-header">
+              <div className="friday-video-modal-title">
+                <Sparkles size={16} />
+                <span>How Friday AI Works — Overview</span>
+              </div>
+              <button 
+                type="button"
+                className="friday-video-modal-close"
+                onClick={() => setIsVideoModalOpen(false)}
+                aria-label="Close video popup"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <div className="friday-video-modal-player">
+              <iframe
+                src="https://player.cloudinary.com/embed/?cloud_name=dwo8ge51h&public_id=gemini_generated_video_4280f0dc_qnkard&autoplay=true"
+                width="854"
+                height="480"
+                style={{ width: '100%', height: '100%', border: 'none' }}
+                allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                allowFullScreen
+                title="How Friday AI Works Video"
+              />
+            </div>
+          </motion.div>
+        </div>
+      )}
 
     </div>
   );
