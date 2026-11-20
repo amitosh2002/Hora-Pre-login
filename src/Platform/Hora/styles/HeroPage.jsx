@@ -182,6 +182,28 @@ export default function HoraServicesIntro() {
             >
               Built for dev teams · GitHub-native · Free while you're small
             </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              style={{ marginTop: '24px' }}
+            >
+              <a 
+                href="https://www.producthunt.com/products/hora?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-hora" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ display: 'inline-block' }}
+              >
+                <img 
+                  alt="Hora - Agile PM for Devs | Product Hunt" 
+                  width="250" 
+                  height="54" 
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1323303&theme=neutral&t=1795111233107" 
+                  style={{ width: '250px', height: '54px', display: 'block' }}
+                />
+              </a>
+            </motion.div>
           </div>
           
           <div className="hero-clean__collage" style={{ width: '100%', height: '500px' }}>
