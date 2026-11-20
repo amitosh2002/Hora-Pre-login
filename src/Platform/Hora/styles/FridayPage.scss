@@ -361,12 +361,14 @@
   }
 
   &__factor-weight {
-    font-size: 14px;
-    font-weight: 800;
+    font-size: 12px;
+    font-weight: 700;
     padding: 4px 10px;
     background: colors.$slate-100;
     border-radius: 6px;
     color: colors.$slate-700;
+    white-space: nowrap;
+    text-align: right;
   }
 
   // Policy Gates Grid

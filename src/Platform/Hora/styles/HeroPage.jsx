@@ -28,8 +28,14 @@ export default function HoraServicesIntro() {
       bulletColor: '#f97316'
     },
     {
-      title: '02 Measure — Hora Matrix',
-      description: 'Deployment frequency, lead time, change failure rate and MTTR — computed from your GitHub activity, not estimated.',
+      title: '02 Measure — DORA Metrics & Hora Matrix',
+      description: 'Track all four industry-standard DORA metrics — computed directly from real GitHub commits, PRs, and workflow runs without manual logging.',
+      doraMetrics: [
+        { name: 'Deployment Frequency', value: '3.2 / day', tier: 'Elite' },
+        { name: 'Lead Time for Changes', value: '18 hours', tier: 'Elite' },
+        { name: 'Change Failure Rate', value: '2.1%', tier: 'Elite' },
+        { name: 'Time to Restore (MTTR)', value: '42 mins', tier: 'Elite' }
+      ],
       icon: BarChart3,
       gradientStart: '#3b82f6',
       gradientEnd: '#0ea5e9',
@@ -112,6 +118,20 @@ export default function HoraServicesIntro() {
       <div style={{ padding: '32px 24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
         <h4 style={{ fontSize: '20px', fontWeight: 800, color: '#1e293b', marginBottom: '12px', lineHeight: 1.3 }}>{feature.title}</h4>
         <p style={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6, margin: 0 }}>{feature.description}</p>
+        
+        {feature.doraMetrics && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', marginTop: '16px' }}>
+            {feature.doraMetrics.map((m, mIdx) => (
+              <div key={mIdx} style={{ background: '#f8fafc', border: '1px solid #f1f5f9', borderRadius: '10px', padding: '8px 10px', display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '11px', color: '#64748b', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{m.name}</span>
+                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginTop: '2px' }}>
+                  <span style={{ fontSize: '14px', fontWeight: 800, color: '#1e293b' }}>{m.value}</span>
+                  <span style={{ fontSize: '10px', fontWeight: 700, color: '#10b981', background: '#ecfdf5', padding: '1px 5px', borderRadius: '4px' }}>{m.tier}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </motion.div>
   );
@@ -256,7 +276,7 @@ export default function HoraServicesIntro() {
             viewport={{ once: true }}
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: '#fef2f2', color: '#ef4444', borderRadius: '100px', fontSize: '14px', fontWeight: 600, marginBottom: '24px', border: '1px solid #fee2e2' }}
           >
-            <span style={{ fontSize: '18px' }}>⚡</span> One Platform
+            <span style={{ fontSize: '18px' }}>⚡</span> What We Offer
           </motion.div>
           
           <motion.h2 
@@ -266,7 +286,7 @@ export default function HoraServicesIntro() {
             transition={{ delay: 0.1 }}
             style={{ fontSize: '48px', fontWeight: 800, color: '#1e293b', lineHeight: 1.1, marginBottom: '24px' }}
           >
-            Everything you need to ship.
+            What we offer — everything you need to ship.
           </motion.h2>
           
           <motion.p 
@@ -276,7 +296,7 @@ export default function HoraServicesIntro() {
             transition={{ delay: 0.2 }}
             style={{ fontSize: '18px', color: '#64748b', lineHeight: 1.6 }}
           >
-            Four powerful tools seamlessly integrated into one platform.
+            Four powerful tools seamlessly integrated into one platform, followed by automated DORA telemetry.
           </motion.p>
         </div>
 
@@ -435,12 +455,53 @@ export default function HoraServicesIntro() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <div style={{ color: '#8b5cf6', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '16px', fontSize: '14px' }}>Hora Matrix</div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', background: '#ede9fe', color: '#7c3aed', borderRadius: '100px', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '20px' }}>
+              📊 DORA Metrics Engine
+            </div>
             <h2 style={{ fontSize: '40px', fontWeight: 800, color: '#1e293b', marginBottom: '24px', lineHeight: 1.1 }}>Your DORA metrics, without the spreadsheet archaeology.</h2>
             
-            <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '18px', color: '#475569', lineHeight: 1.6, marginBottom: '28px' }}>
               Every merge and deploy already happens in GitHub. Hora Matrix just reads it — so the numbers your team reviews on Friday are the same ones that were true on Monday.
             </p>
+
+            {/* 4 DORA Metrics Cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '14px' }}>
+              <div style={{ background: '#ffffff', borderRadius: '14px', padding: '16px 18px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: '#3b82f6', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Deploy Frequency</span>
+                  <span style={{ fontSize: '10px', fontWeight: 700, color: '#10b981', background: '#ecfdf5', padding: '2px 6px', borderRadius: '100px' }}>Elite</span>
+                </div>
+                <div style={{ fontSize: '20px', fontWeight: 800, color: '#1e293b' }}>Multiple / day</div>
+                <p style={{ fontSize: '12px', color: '#64748b', margin: '3px 0 0 0', lineHeight: 1.4 }}>Real GitHub Actions workflow runs</p>
+              </div>
+
+              <div style={{ background: '#ffffff', borderRadius: '14px', padding: '16px 18px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: '#8b5cf6', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Lead Time</span>
+                  <span style={{ fontSize: '10px', fontWeight: 700, color: '#10b981', background: '#ecfdf5', padding: '2px 6px', borderRadius: '100px' }}>Elite</span>
+                </div>
+                <div style={{ fontSize: '20px', fontWeight: 800, color: '#1e293b' }}>&lt; 24 hours</div>
+                <p style={{ fontSize: '12px', color: '#64748b', margin: '3px 0 0 0', lineHeight: 1.4 }}>From branch to verified production release</p>
+              </div>
+
+              <div style={{ background: '#ffffff', borderRadius: '14px', padding: '16px 18px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: '#f43f5e', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Change Failure</span>
+                  <span style={{ fontSize: '10px', fontWeight: 700, color: '#10b981', background: '#ecfdf5', padding: '2px 6px', borderRadius: '100px' }}>Elite</span>
+                </div>
+                <div style={{ fontSize: '20px', fontWeight: 800, color: '#1e293b' }}>&lt; 5%</div>
+                <p style={{ fontSize: '12px', color: '#64748b', margin: '3px 0 0 0', lineHeight: 1.4 }}>Auto-detected reverts & hotfix branches</p>
+              </div>
+
+              <div style={{ background: '#ffffff', borderRadius: '14px', padding: '16px 18px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: '#10b981', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Restore Time (MTTR)</span>
+                  <span style={{ fontSize: '10px', fontWeight: 700, color: '#10b981', background: '#ecfdf5', padding: '2px 6px', borderRadius: '100px' }}>Elite</span>
+                </div>
+                <div style={{ fontSize: '20px', fontWeight: 800, color: '#1e293b' }}>&lt; 1 hour</div>
+                <p style={{ fontSize: '12px', color: '#64748b', margin: '3px 0 0 0', lineHeight: 1.4 }}>Incident recovery & rollback duration</p>
+              </div>
+            </div>
           </motion.div>
           
         </div>

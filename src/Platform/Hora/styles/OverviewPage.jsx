@@ -34,13 +34,13 @@ export default function OverviewPage() {
       bulletColor: '#f97316'
     },
     {
-      title: '02 Measure',
-      description: 'Hora Matrix: delivery metrics, computed not guessed. Deployment frequency, lead time, change failure rate and MTTR — pulled straight from your GitHub activity.',
+      title: '02 Measure — DORA Metrics',
+      description: 'Hora Matrix computes all four industry-standard DORA metrics from your Git workflow — deterministic, zero spreadsheet guesswork.',
       bullets: [
-        'Deploy frequency — counted from real workflow runs',
-        'Lead time for changes — coding / review / deploy stages',
-        'Change failure rate — detected via revert commits and hotfixes',
-        'Team Matrix — numbers broken down per contributor'
+        'Deploy frequency — counted from real GitHub Actions workflow runs',
+        'Lead time for changes — measured across coding, review & deploy stages',
+        'Change failure rate — detected automatically via revert commits and hotfixes',
+        'Mean time to recovery (MTTR) — incident-to-restore telemetry per repo & team'
       ],
       icon: BarChart3,
       gradientStart: '#3b82f6',

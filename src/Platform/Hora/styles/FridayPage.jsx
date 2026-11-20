@@ -46,12 +46,12 @@ export default function FridayPage() {
     };
   }, [isVideoModalOpen]);
   const factors = [
-    { name: 'Skill Match', weight: '35%', desc: 'Parsed from repo manifests (Node, Redis, Docker) and commit language distributions.' },
-    { name: 'Project Experience', weight: '20%', desc: 'Historical PR merges, module touches, and directory-level code contributions.' },
-    { name: 'Similar Work', weight: '15%', desc: 'Semantic and structural similarity to previously resolved issues in Jira/Hora.' },
-    { name: 'Sprint Capacity', weight: '15%', desc: 'Active story points and ticket counts evaluated against the team headroom ceiling.' },
-    { name: 'Availability', weight: '10%', desc: 'Working hours, calendar schedule, and scheduled sprint leave.' },
-    { name: 'Dependencies', weight: '5%', desc: 'Co-location of dependent tickets and PR review bottlenecks in the current sprint.' }
+    { name: 'Skill Match', weight: 'Primary Signal', desc: 'Parsed from repo manifests (Node, Redis, Docker) and commit language distributions.' },
+    { name: 'Project Experience', weight: 'Core Signal', desc: 'Historical PR merges, module touches, and directory-level code contributions.' },
+    { name: 'Similar Work', weight: 'Contextual Signal', desc: 'Semantic and structural similarity to previously resolved issues in Jira/Hora.' },
+    { name: 'Sprint Capacity', weight: 'Headroom Gate', desc: 'Active story points and ticket counts evaluated against the team headroom ceiling.' },
+    { name: 'Availability', weight: 'Live Telemetry', desc: 'Working hours, calendar schedule, and scheduled sprint leave.' },
+    { name: 'Dependencies', weight: 'Graph Analysis', desc: 'Co-location of dependent tickets and PR review bottlenecks in the current sprint.' }
   ];
 
   const policyGates = [
@@ -185,24 +185,22 @@ export default function FridayPage() {
                 <img src={dataAnalyticsSvg} alt="6-Factor Algorithm Scoring" />
               </div>
               <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', margin: '0 0 12px 0' }}>
-                Capability Score Equation
+                Multi-Signal Evaluation Engine
               </h3>
               <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.6, margin: 0 }}>
-                Every score is a weighted linear combination of six normalized signals. The calculation runs entirely in memory without non-deterministic prompt variations:
+                Every score is computed dynamically across six normalized engineering signals. The calculation runs entirely in memory with deterministic precision, eliminating non-deterministic prompt variations:
               </p>
 
               <div className="friday-page__formula-code">
-                Score(dev, ticket) = <br />
-                &nbsp;&nbsp;0.35 × SkillMatch + <br />
-                &nbsp;&nbsp;0.20 × ProjectExperience + <br />
-                &nbsp;&nbsp;0.15 × SimilarWork + <br />
-                &nbsp;&nbsp;0.15 × SprintCapacity + <br />
-                &nbsp;&nbsp;0.10 × Availability + <br />
-                &nbsp;&nbsp;0.05 × Dependencies
+                Score(dev, ticket) = &Sigma; (w<sub>i</sub> &times; Signal<sub>i</sub>) &nbsp;&bull;&nbsp; [0–100]<br />
+                <span style={{ color: '#94a3b8', fontSize: '12px' }}>
+                  &nbsp;&nbsp;&bull; Dynamically weighted across repo signals &amp; sprint state<br />
+                  &nbsp;&nbsp;&bull; Constrained by: ActivePoints &le; TeamHeadroomCeiling
+                </span>
               </div>
 
               <div style={{ fontSize: '12px', color: '#64748b', fontStyle: 'italic' }}>
-                * A hard ceiling constraint rejects candidates whose active sprint points or ticket count exceeds org limits, regardless of skill match.
+                * Strict headroom constraints protect team balance by rejecting candidates whose active load exceeds org capacity limits, regardless of skill score.
               </div>
             </div>
 
